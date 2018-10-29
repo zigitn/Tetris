@@ -18,7 +18,7 @@ public class layerDataBase extends layer
   public void paint(Graphics g)
   {
     this.createBlock(g);
-    g.drawImage(IMG_DB, this.x + PADDING, this.y + PADDING, null);
+    g.drawImage(IMG_DB, this.x, this.y + PADDING, null);
   }
 
 

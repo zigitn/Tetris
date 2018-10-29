@@ -17,7 +17,7 @@ public class layerDisk extends layer
     public void paint(Graphics g)
     {
         this.createBlock(g);
-        g.drawImage(IMG_DISK, this.x + PADDING, this.y + PADDING, null);
+        g.drawImage(IMG_DISK, this.x, this.y + PADDING, null);
 
     }
 

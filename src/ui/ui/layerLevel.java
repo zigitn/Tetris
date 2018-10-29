@@ -18,8 +18,8 @@ public class layerLevel extends layer
     public void paint(Graphics g)
     {
         this.createBlock(g);
-        g.drawImage(IMG_LEVEL, this.x + PADDING, this.y + PADDING, null);
-        this.shownum(this.gameDto.getNowlevel(), g,50);
+        g.drawImage(IMG_LEVEL, this.x , this.y + PADDING, null);
+        this.showNum(this.gameDto.getNowLevel(), g,50);
     }
 
 

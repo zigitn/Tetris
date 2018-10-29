@@ -59,7 +59,7 @@ public abstract class layer
         this.gameDto = gameDto;
     }
 
-    protected void shownum(int num, Graphics g, int PaddingTop)
+    protected void showNum(int num, Graphics g, int PaddingTop)
     {
         char spited[] = Integer.toString(num).toCharArray();
         for (int i = spited.length - 1; i >= 0; i--)

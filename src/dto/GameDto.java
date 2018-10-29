@@ -25,10 +25,10 @@ public class GameDto
     private int next;
 
     //右-等级
-    private int nowlevel;
+    private int nowLevel;
 
     //
-    private int nowPonit;
+    private int nowPoint;
     private int nowRemoveLine;
 
     public GameDto()
@@ -88,24 +88,24 @@ public class GameDto
         this.next = next;
     }
 
-    public int getNowlevel()
+    public int getNowLevel()
     {
-        return nowlevel;
+        return nowLevel;
     }
 
-    public void setNowlevel(int nowlevel)
+    public void setNowLevel(int nowLevel)
     {
-        this.nowlevel = nowlevel;
+        this.nowLevel = nowLevel;
     }
 
-    public int getNowPonit()
+    public int getNowPoint()
     {
-        return nowPonit;
+        return nowPoint;
     }
 
-    public void setNowPonit(int nowPonit)
+    public void setNowPoint(int nowPoint)
     {
-        this.nowPonit = nowPonit;
+        this.nowPoint = nowPoint;
     }
 
     public int getNowRemoveLine()
