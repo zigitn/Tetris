@@ -9,8 +9,6 @@ public class DataBase implements Data
 
 
 
-
-
     @Override
     public List<PlayerInfo> loadData()
     {

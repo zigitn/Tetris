@@ -69,18 +69,4 @@ public class DataDisk implements Data
             }
         } return playerInfoList;
     }
-
-/*
-    public static void main(String[] args) throws IOException
-    {
-        DataDisk dd=new DataDisk();
-        List<PlayerInfo> playerInfoList=new ArrayList<PlayerInfo>();
-        playerInfoList.add(new PlayerInfo("长者",9999));
-        playerInfoList.add(new PlayerInfo("董先生",200));
-
-        ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(FILE_PATH));
-        oos.writeObject(playerInfoList);
-    }
-*/
-
 }

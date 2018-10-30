@@ -28,9 +28,9 @@ public class GameControl
         this.panelGame = panelGame;
         this.gameService= gameService;
         dataDisk= new DataDisk();
-        this.gameService.setDbRecode(dataDisk.loadData());
-        dataDataBase= new DataBase();
         this.gameService.setDiskRecode(dataDisk.loadData());
+        dataDataBase= new DataBase();
+        this.gameService.setDbRecode(dataDataBase.loadData());
 
     }
 
