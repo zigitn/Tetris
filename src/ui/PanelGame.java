@@ -1,7 +1,7 @@
 package ui;
 
 import config.gameConfig;
-import config.layerConfig;
+import config.LayerConfig;
 import config.xmlReader;
 import control.PlayerControl;
 import dto.GameDto;
@@ -14,14 +14,14 @@ import java.util.List;
 
 public class PanelGame extends JPanel
 {
-    private List<layer> layers;
+    private List<Layer> layers;
 
     private GameDto gameDto;
     public PanelGame(GameDto gameDto)
     {
         this.gameDto=gameDto;
         initComponent();
-        initlayer();
+        initLayer();
     }
 
     public void setGameControl(PlayerControl playerControl)
@@ -33,20 +33,20 @@ public class PanelGame extends JPanel
     {
     }
 
-    private void initlayer()
+    private void initLayer()
     {
         try
         {
             gameConfig cfg = xmlReader.getGameConfig();
-            List<layerConfig> layersCfg = cfg.getLayersConfig();
+            List<LayerConfig> layersCfg = cfg.getLayersConfig();
             layers = new ArrayList<>(layersCfg.size());
-            for (layerConfig layerCfg : layersCfg)
+            for (LayerConfig layerCfg : layersCfg)
             {
                 Class<?> cls = Class.forName(layerCfg.getClassName());
 
                 Constructor<?> ctr = cls.getConstructor(int.class, int.class, int.class, int.class);
 
-                layer layer = (layer) ctr.newInstance(layerCfg.getX(), layerCfg.getY(), layerCfg.getW(), layerCfg.getH());
+                Layer layer = (Layer) ctr.newInstance(layerCfg.getX(), layerCfg.getY(), layerCfg.getW(), layerCfg.getH());
                 layer.setGameDto(gameDto);
                 layers.add(layer);
             }

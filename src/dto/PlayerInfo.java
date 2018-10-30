@@ -1,6 +1,6 @@
 package dto;
 
-public class PlayerInfo
+public class PlayerInfo implements Comparable<PlayerInfo>
 
 {
 
@@ -32,5 +32,11 @@ public class PlayerInfo
     {
         this.username = username;
         this.point = point;
+    }
+
+    @Override
+    public int compareTo(PlayerInfo playerInfo)
+    {
+        return playerInfo.point-this.point;
     }
 }

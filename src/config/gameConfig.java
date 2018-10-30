@@ -14,7 +14,7 @@ public class gameConfig
     private int RIM;
     private int padding;
     private String title;
-    private List<layerConfig> layersConfig;
+    private List<LayerConfig> layersConfig;
 
     public gameConfig() throws Exception
     {
@@ -33,11 +33,13 @@ public class gameConfig
         this.RIM = Integer.parseInt(frame.attributeValue("RIM"));
         this.padding = Integer.parseInt(frame.attributeValue("PADDING"));
         this.title=frame.attributeValue("title");
-        List<Element> layers = frame.elements("layer");
-        layersConfig = new ArrayList<layerConfig>();
+
+
+        List<Element> layers = frame.elements("Layer");
+        layersConfig = new ArrayList<>();
         for (Element layer : layers)
         {
-            layerConfig lc = new layerConfig(layer.attributeValue("className"),
+            LayerConfig lc = new LayerConfig(layer.attributeValue("className"),
                                              Integer.parseInt(layer.attributeValue("x")),
                                              Integer.parseInt(layer.attributeValue("y")),
                                              Integer.parseInt(layer.attributeValue("w")),
@@ -80,7 +82,7 @@ public class gameConfig
         return padding;
     }
 
-    public List<layerConfig> getLayersConfig()
+    public List<LayerConfig> getLayersConfig()
     {
         return layersConfig;
     }

@@ -2,6 +2,8 @@ package dto;
 
 import entity.GameAct;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameDto
@@ -41,23 +43,36 @@ public class GameDto
         this.gameMainMap=new boolean[10][18];
     }
 
-    public List<PlayerInfo> getDbRecode()
-    {
-        return dbRecode;
-    }
-
     public void setDbRecode(List<PlayerInfo> dbRecode)
     {
+
+        Collections.sort(dbRecode);
         this.dbRecode = dbRecode;
+    }
+
+    public List<PlayerInfo> getDbRecode()
+    {
+        if (this.dbRecode == null)
+        {
+            dbRecode=new ArrayList<PlayerInfo>();
+            dbRecode.add(new PlayerInfo("no one",0));
+        }
+        return this.dbRecode;
     }
 
     public List<PlayerInfo> getLocalRecode()
     {
-        return localRecode;
+        if (this.localRecode == null)
+        {
+            this.localRecode=new ArrayList<PlayerInfo>();
+            this.localRecode.add(new PlayerInfo("no one",0));
+        }
+        return this.localRecode;
     }
 
     public void setLocalRecode(List<PlayerInfo> localRecode)
     {
+        Collections.sort(localRecode);
         this.localRecode = localRecode;
     }
 
