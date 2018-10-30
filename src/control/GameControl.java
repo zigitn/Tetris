@@ -2,6 +2,7 @@ package control;
 
 import dao.Data;
 import dao.DataBase;
+import dao.DataDisk;
 import service.GameService;
 import ui.PanelGame;
 
@@ -12,8 +13,8 @@ import ui.PanelGame;
 public class GameControl
 {
 
-    private Data dataA;
-    private Data dataB;
+    private Data dataDisk;
+    private Data dataDataBase;
 
     /*游戏界面层*/
     private PanelGame panelGame;
@@ -26,8 +27,11 @@ public class GameControl
     {
         this.panelGame = panelGame;
         this.gameService= gameService;
-        dataA= new DataBase();
-        dataB= new DataBase();
+        dataDisk= new DataDisk();
+        this.gameService.setDbRecode(dataDisk.loadData());
+        dataDataBase= new DataBase();
+        this.gameService.setDiskRecode(dataDisk.loadData());
+
     }
 
     public void keyUp()

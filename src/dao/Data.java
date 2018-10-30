@@ -2,6 +2,7 @@ package dao;
 
 import dto.PlayerInfo;
 
+import java.io.IOException;
 import java.util.List;
 
 /*
@@ -14,5 +15,5 @@ public interface Data
     List<PlayerInfo> loadData();
 
     //存储数据
-    void saveData(List<PlayerInfo> playerInfoList);
+    void saveData(List<PlayerInfo> playerInfoList) throws IOException;
 }

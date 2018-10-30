@@ -1,9 +1,11 @@
 package service;
 
 import dto.GameDto;
+import dto.PlayerInfo;
 import entity.GameAct;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Random;
 
 public class GameService
@@ -58,5 +60,19 @@ public class GameService
         this.gameDto.setNowLevel(this.gameDto.getNowLevel()+1);
         this.gameDto.setNowPoint(this.gameDto.getNowPoint()+1);
         this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine()+1);
+    }
+
+    
+    //===================================================
+    
+    
+    public void setDbRecode(List<PlayerInfo> loadData)
+    {
+        this.gameDto.setDbRecode(loadData);
+    }
+
+    public void setDiskRecode(List<PlayerInfo> loadData)
+    {
+        this.gameDto.setDiskRecode(loadData);
     }
 }

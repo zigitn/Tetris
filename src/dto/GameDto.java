@@ -15,7 +15,7 @@ public class GameDto
     //左-显示数据库数据
     private List<PlayerInfo> dbRecode;
     //左-显示本地数据
-    private List<PlayerInfo> localRecode;
+    private List<PlayerInfo> diskRecode;
 
 
 
@@ -45,36 +45,50 @@ public class GameDto
 
     public void setDbRecode(List<PlayerInfo> dbRecode)
     {
-
-        Collections.sort(dbRecode);
+        if (this.dbRecode == null)
+        {
+            this.dbRecode=new ArrayList<PlayerInfo>();
+            this.dbRecode.add(new PlayerInfo("no one",0));
+        }
+        else
+        {
+            Collections.sort(dbRecode);
+        }
         this.dbRecode = dbRecode;
+    }
+    public void setDiskRecode(List<PlayerInfo> diskRecode)
+    {
+        if (this.diskRecode == null)
+        {
+            this.diskRecode=new ArrayList<PlayerInfo>();
+            this.diskRecode.add(new PlayerInfo("no one",0));
+        }
+        else
+        {
+            Collections.sort(diskRecode);
+        }
+        this.diskRecode = diskRecode;
     }
 
     public List<PlayerInfo> getDbRecode()
     {
         if (this.dbRecode == null)
         {
-            dbRecode=new ArrayList<PlayerInfo>();
-            dbRecode.add(new PlayerInfo("no one",0));
+            this.dbRecode=new ArrayList<PlayerInfo>();
         }
         return this.dbRecode;
     }
 
-    public List<PlayerInfo> getLocalRecode()
+    public List<PlayerInfo> getDiskRecode()
     {
-        if (this.localRecode == null)
+        if (this.diskRecode == null)
         {
-            this.localRecode=new ArrayList<PlayerInfo>();
-            this.localRecode.add(new PlayerInfo("no one",0));
+            this.diskRecode=new ArrayList<PlayerInfo>();
         }
-        return this.localRecode;
+        return this.diskRecode;
     }
 
-    public void setLocalRecode(List<PlayerInfo> localRecode)
-    {
-        Collections.sort(localRecode);
-        this.localRecode = localRecode;
-    }
+
 
     public boolean[][] getGameMainMap()
     {

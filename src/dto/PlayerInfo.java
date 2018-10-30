@@ -1,6 +1,8 @@
 package dto;
 
-public class PlayerInfo implements Comparable<PlayerInfo>
+import java.io.Serializable;
+
+public class PlayerInfo implements Comparable<PlayerInfo>, Serializable
 
 {
 

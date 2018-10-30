@@ -32,4 +32,7 @@ public class Img
     public static Image IMG_DB = new ImageIcon("media/string/db.png").getImage();
 
 
+    //LayerDisk
+    public static Image IMG_DISK = new ImageIcon("media/string/disk.png").getImage();
+
 }
