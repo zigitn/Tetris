@@ -21,7 +21,8 @@ public class LayerGame extends Layer
 
         Point[] points = this.gameDto.getGameAct().getActPoints();
 
-        int typeCode = (this.gameDto.getGameAct().getTypeCode())+1;
+        this.showShadow(points, g);
+        int typeCode = (this.gameDto.getGameAct().getTypeCode()) + 1;
 
         for (int i = 0; i < points.length; i++)
         {
@@ -42,18 +43,35 @@ public class LayerGame extends Layer
         }
 
     }
+
     private void drawActById(int x, int y, int imgIdx, Graphics g)
     {
         g.drawImage(Img.ACT,
-                    this.x + (x <<ACT_SIZE_ROL) + 7,
-                    this.y +(y <<ACT_SIZE_ROL) + 7,
-                    this.x + (x+1 <<ACT_SIZE_ROL)  + 7,
-                    this.y + (y+1 <<ACT_SIZE_ROL)  + 7,
-                    imgIdx<<ACT_SIZE_ROL,
+                    this.x + (x << ACT_SIZE_ROL) + BORDER,
+                    this.y + (y << ACT_SIZE_ROL) + BORDER,
+                    this.x + (x + 1 << ACT_SIZE_ROL) + BORDER,
+                    this.y + (y + 1 << ACT_SIZE_ROL) + BORDER,
+                    imgIdx << ACT_SIZE_ROL,
                     0,
-                    (imgIdx+1)<<ACT_SIZE_ROL,
-                    1<<ACT_SIZE_ROL,
+                    (imgIdx + 1) << ACT_SIZE_ROL,
+                    1 << ACT_SIZE_ROL,
                     null);
+    }
+
+    private void showShadow(Point[] points, Graphics g)
+    {
+        int leftX = 9;
+        int rightX = 0;
+        for (Point p : points)
+        {
+            leftX = p.x < leftX ? p.x : leftX;
+            rightX = p.x > rightX ? p.x : rightX;
+        }
+        g.drawImage(Img.IMG_SHADOW,
+                    this.x + BORDER + (leftX << ACT_SIZE_ROL),
+                    this.y + BORDER,
+                    (rightX - leftX + 1) << ACT_SIZE_ROL,
+                    this.h-(BORDER<<1),null);
     }
 
 }

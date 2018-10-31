@@ -1,8 +1,8 @@
 package ui;
 
-import config.gameConfig;
+import config.FrameConfig;
 import config.LayerConfig;
-import config.xmlReader;
+import config.gameConfig;
 import control.PlayerControl;
 import dto.GameDto;
 
@@ -17,9 +17,10 @@ public class PanelGame extends JPanel
     private List<Layer> layers;
 
     private GameDto gameDto;
+
     public PanelGame(GameDto gameDto)
     {
-        this.gameDto=gameDto;
+        this.gameDto = gameDto;
         initComponent();
         initLayer();
     }
@@ -37,8 +38,8 @@ public class PanelGame extends JPanel
     {
         try
         {
-            gameConfig cfg = xmlReader.getGameConfig();
-            List<LayerConfig> layersCfg = cfg.getLayersConfig();
+            FrameConfig fCfg = gameConfig.getFrameConfig();
+            List<LayerConfig> layersCfg = fCfg.getLayersConfig();
             layers = new ArrayList<>(layersCfg.size());
             for (LayerConfig layerCfg : layersCfg)
             {
@@ -46,7 +47,10 @@ public class PanelGame extends JPanel
 
                 Constructor<?> ctr = cls.getConstructor(int.class, int.class, int.class, int.class);
 
-                Layer layer = (Layer) ctr.newInstance(layerCfg.getX(), layerCfg.getY(), layerCfg.getW(), layerCfg.getH());
+                Layer layer = (Layer) ctr.newInstance(layerCfg.getX(),
+                                                      layerCfg.getY(),
+                                                      layerCfg.getW(),
+                                                      layerCfg.getH());
                 layer.setGameDto(gameDto);
                 layers.add(layer);
             }
@@ -60,10 +64,9 @@ public class PanelGame extends JPanel
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        for (int i = 0; i < layers.size(); i++)
+        for (Layer layer : layers)
         {
-
-            layers.get(i).paint(g);
+            layer.paint(g);
         }
         this.requestFocus();
     }

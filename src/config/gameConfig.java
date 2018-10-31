@@ -1,89 +1,62 @@
 package config;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class gameConfig
 {
-    private int width;
-    private int height;
-    private int RIM;
-    private int padding;
-    private String title;
-    private List<LayerConfig> layersConfig;
+    private static FrameConfig FRAME_CONFIG = null;
+    private static DataConfig DATA_CONFIG = null;
+    private static SystemConfig SYSTEM_CONFIG = null;
 
-    public gameConfig() throws Exception
+    static
     {
-        SAXReader reader = new SAXReader();
-        Document doc = reader.read("./config/config.xml");
-        Element game = doc.getRootElement();
-        this.setUiConfig(game.element("frame"));
-        this.setSystemConfig(game.element("system"));
-        this.setDataConfig(game.element("data"));
-    }
-
-    private void setUiConfig(Element frame)
-    {
-        this.width = Integer.parseInt(frame.attributeValue("width"));
-        this.height = Integer.parseInt(frame.attributeValue("height"));
-        this.RIM = Integer.parseInt(frame.attributeValue("RIM"));
-        this.padding = Integer.parseInt(frame.attributeValue("PADDING"));
-        this.title=frame.attributeValue("title");
-
-
-        List<Element> layers = frame.elements("Layer");
-        layersConfig = new ArrayList<>();
-        for (Element layer : layers)
+        try
         {
-            LayerConfig lc = new LayerConfig(layer.attributeValue("className"),
-                                             Integer.parseInt(layer.attributeValue("x")),
-                                             Integer.parseInt(layer.attributeValue("y")),
-                                             Integer.parseInt(layer.attributeValue("w")),
-                                             Integer.parseInt(layer.attributeValue("h")));
-            layersConfig.add(lc);
+            //创建xml读取器
+            SAXReader reader = new SAXReader();
+            //读取xml文件
+            Document doc = reader.read("./config/config.xml");
+            //获得xml根结点
+            Element game = doc.getRootElement();
+            //创建界面配置对象
+            FRAME_CONFIG = new FrameConfig(game.element("frame"));
+            //创建数据访问对象
+            DATA_CONFIG = new DataConfig(game.element("data"));
+            //创建系统对象
+            SYSTEM_CONFIG = new SystemConfig(game.element("system"));
         }
-
+        catch (DocumentException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    private void setSystemConfig(Element system)
+    /*获得窗口配置*/
+    public static FrameConfig getFrameConfig()
+    {
+        return FRAME_CONFIG;
+    }
+
+    /*获得系统配置*/
+    public static DataConfig getDataConfig()
+    {
+        return DATA_CONFIG;
+    }
+
+    /*获得数据访问配置*/
+    public static SystemConfig getSystemConfig()
+    {
+        return SYSTEM_CONFIG;
+    }
+
+    //构造器私有化
+    private gameConfig()
     {
     }
 
-    private void setDataConfig(Element data)
-    {
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public int getWidth()
-    {
-        return width;
-    }
-
-    public int getHeight()
-    {
-        return height;
-    }
-
-    public int getRIM()
-    {
-        return RIM;
-    }
-
-    public int getPadding()
-    {
-        return padding;
-    }
-
-    public List<LayerConfig> getLayersConfig()
-    {
-        return layersConfig;
-    }
 }
+
+

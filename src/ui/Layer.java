@@ -1,7 +1,7 @@
 package ui;
 
+import config.FrameConfig;
 import config.gameConfig;
-import config.xmlReader;
 import dto.GameDto;
 
 import javax.swing.*;
@@ -12,18 +12,21 @@ public abstract class Layer
     private static final Image IMG_NUMBER = new ImageIcon("./media/string/num.png").getImage();
     private static final int IMG_NUM_W = IMG_NUMBER.getWidth(null) / 10;
     private static final int IMG_NUM_H = IMG_NUMBER.getHeight(null);
-    private static int RIM;
+    protected static int BORDER;
     protected static final int PADDING;
-
-    protected static final int PADDING_SLOT=14;
+    protected static final int WINDOW_W;
+    protected static final int WINDOW_H;
+    protected static final int PADDING_SLOT = 14;
 
     private static final Font FONT = new Font("黑体", Font.PLAIN, 20);
 
     static
     {
-        gameConfig cfg = xmlReader.getGameConfig();
-        RIM = cfg.getRIM();
-        PADDING = cfg.getPadding();
+        FrameConfig fCfg = gameConfig.getFrameConfig();
+        BORDER = fCfg.getBorder();
+        PADDING = fCfg.getPadding();
+        WINDOW_H=fCfg.getHeight();
+        WINDOW_W=fCfg.getWidth();
     }
 
     private static Image IMG = new ImageIcon("./media/window/Window.png").getImage();
@@ -42,17 +45,53 @@ public abstract class Layer
 
     protected void createBlock(Graphics g)
     {
-        g.drawImage(IMG, x, y, x + RIM, y + RIM, 0, 0, RIM, RIM, null);
-        g.drawImage(IMG, x + RIM, y, w + x - RIM, y + RIM, RIM, 0, IMG_W - RIM, RIM, null);
-        g.drawImage(IMG, w + x - RIM, y, w + x, y + RIM, IMG_W - RIM, 0, IMG_W, RIM, null);
+        g.drawImage(IMG, x, y, x + BORDER, y + BORDER, 0, 0, BORDER, BORDER, null);
+        g.drawImage(IMG, x + BORDER, y, w + x - BORDER, y + BORDER, BORDER, 0, IMG_W - BORDER, BORDER, null);
+        g.drawImage(IMG, w + x - BORDER, y, w + x, y + BORDER, IMG_W - BORDER, 0, IMG_W, BORDER, null);
 
-        g.drawImage(IMG, x, y + RIM, x + RIM, y + h - RIM, 0, RIM, RIM, IMG_H - RIM, null);
-        g.drawImage(IMG, x + RIM, y + RIM, x + w - RIM, y + h - RIM, RIM, RIM, IMG_W - RIM, IMG_H - RIM, null);
-        g.drawImage(IMG, x + w - RIM, y + RIM, w + x, y + h - RIM, IMG_W - RIM, RIM, IMG_W, IMG_H - RIM, null);
+        g.drawImage(IMG, x, y + BORDER, x + BORDER, y + h - BORDER, 0, BORDER, BORDER, IMG_H - BORDER, null);
+        g.drawImage(IMG,
+                    x + BORDER,
+                    y + BORDER,
+                    x + w - BORDER,
+                    y + h - BORDER,
+                    BORDER,
+                    BORDER,
+                    IMG_W - BORDER,
+                    IMG_H - BORDER,
+                    null);
+        g.drawImage(IMG,
+                    x + w - BORDER,
+                    y + BORDER,
+                    w + x,
+                    y + h - BORDER,
+                    IMG_W - BORDER,
+                    BORDER,
+                    IMG_W,
+                    IMG_H - BORDER,
+                    null);
 
-        g.drawImage(IMG, x, y + h - RIM, x + RIM, y + h, 0, IMG_H - RIM, RIM, IMG_H, null);
-        g.drawImage(IMG, x + RIM, y + h - RIM, x + w - RIM, y + h, RIM, IMG_H - RIM, IMG_W - RIM, IMG_H, null);
-        g.drawImage(IMG, x + w - RIM, y + h - RIM, x + w, y + h, IMG_W - RIM, IMG_H - RIM, IMG_W, IMG_H, null);
+        g.drawImage(IMG, x, y + h - BORDER, x + BORDER, y + h, 0, IMG_H - BORDER, BORDER, IMG_H, null);
+        g.drawImage(IMG,
+                    x + BORDER,
+                    y + h - BORDER,
+                    x + w - BORDER,
+                    y + h,
+                    BORDER,
+                    IMG_H - BORDER,
+                    IMG_W - BORDER,
+                    IMG_H,
+                    null);
+        g.drawImage(IMG,
+                    x + w - BORDER,
+                    y + h - BORDER,
+                    x + w,
+                    y + h,
+                    IMG_W - BORDER,
+                    IMG_H - BORDER,
+                    IMG_W,
+                    IMG_H,
+                    null);
 
     }
 
@@ -93,7 +132,7 @@ public abstract class Layer
                     this.x + PADDING,
                     y,
                     this.x + PADDING + (int) (percent * Img.IMG_SLOT_W),
-                    y+(PADDING<<1),
+                    y + (PADDING << 1),
                     0,
                     0,
                     (int) (percent * Img.IMG_SLOT_W),
@@ -119,10 +158,6 @@ public abstract class Layer
                 g.drawString(temp, this.x + Img.IMG_SLOT_W - 10 * (spited.length - i), y + PADDING + 7);
 
             }
-        }
-        else
-        {
-            return;
         }
 
     }

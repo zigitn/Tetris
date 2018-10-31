@@ -15,5 +15,5 @@ public interface Data
     List<PlayerInfo> loadData();
 
     //存储数据
-    void saveData(List<PlayerInfo> playerInfoList) throws IOException;
+    void saveData(PlayerInfo playerInfo) throws IOException;
 }

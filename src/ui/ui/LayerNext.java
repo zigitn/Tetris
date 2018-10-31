@@ -1,8 +1,8 @@
 package ui.ui;
 
+import ui.Img;
 import ui.Layer;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class LayerNext extends Layer
@@ -12,21 +12,12 @@ public class LayerNext extends Layer
         super(x, y, w, h);
     }
 
-    private static Image[] NEXT_ACT;
 
-    static
-    {
-        NEXT_ACT = new Image[7];
-        for (int i = 0; i < NEXT_ACT.length; i++)
-        {
-            NEXT_ACT[i] = new ImageIcon("./media/game/" + i + ".png").getImage();
-        }
-    }
 
     public void paint(Graphics g)
     {
         this.createBlock(g);
-        this.drawImageAtCenter(NEXT_ACT[this.gameDto.getNext()],g);
+        this.drawImageAtCenter(Img.NEXT_ACT[this.gameDto.getNext()], g);
     }
 
     public void drawImageAtCenter(Image img, Graphics g)

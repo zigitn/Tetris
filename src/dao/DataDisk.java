@@ -1,10 +1,8 @@
 package dao;
 
 import dto.PlayerInfo;
-import ui.Layer;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataDisk implements Data
@@ -13,9 +11,10 @@ public class DataDisk implements Data
     private static final String FILE_PATH = "./saves/recode.dat";
 
     @Override
-    public void saveData(List<PlayerInfo> playerInfoList)
+    public void saveData(PlayerInfo playerInfo)
     {
-
+        List<PlayerInfo> playerInfoList=this.loadData();
+        playerInfoList.add(playerInfo);
         ObjectOutputStream oos = null;
         try
         {

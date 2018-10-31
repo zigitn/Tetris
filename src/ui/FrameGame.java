@@ -1,7 +1,7 @@
 package ui;
 
+import config.FrameConfig;
 import config.gameConfig;
-import config.xmlReader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,13 @@ public class FrameGame extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //配置读取器
-        gameConfig cfg = xmlReader.getGameConfig();
+        FrameConfig fCfg = gameConfig.getFrameConfig();
 
         //设置标题
-        this.setTitle(cfg.getTitle());
+        this.setTitle(fCfg.getTitle());
 
         //固定窗口大小
-        this.setSize(cfg.getWidth(), cfg.getHeight());
+        this.setSize(fCfg.getWidth(), fCfg.getHeight());
         this.setResizable(false);
 
         //令窗口居中
@@ -29,7 +29,6 @@ public class FrameGame extends JFrame
         Dimension screen = toolkit.getScreenSize();
         this.setLocation(screen.width - this.getWidth() >> 1, (screen.height - this.getHeight() >> 1) - 50);
         this.setContentPane(panelGame);
-
 
         //显示本Frame
 

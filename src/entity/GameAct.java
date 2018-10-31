@@ -17,7 +17,7 @@ public class GameAct
 
     static
     {
-        TYPE_CONFIG=new ArrayList<Point[]>(7);
+        TYPE_CONFIG = new ArrayList<Point[]>(7);
         TYPE_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(6, 0)});
         TYPE_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(4, 1)});
         TYPE_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(3, 1)});
@@ -42,12 +42,12 @@ public class GameAct
 
     public void init(int typeCode)
     {
-        this.typeCode=typeCode;
-        Point[] points=TYPE_CONFIG.get(typeCode);
-        actPoints=new Point[points.length];
-        for (int i=0;i<actPoints.length;i++)
+        this.typeCode = typeCode;
+        Point[] points = TYPE_CONFIG.get(typeCode);
+        actPoints = new Point[points.length];
+        for (int i = 0; i < actPoints.length; i++)
         {
-            actPoints[i]=new Point(points[i].x,points[i].y);
+            actPoints[i] = new Point(points[i].x, points[i].y);
         }
     }
 
@@ -77,7 +77,8 @@ public class GameAct
 
     public void round(boolean[][] mainGameMap)
     {
-        if (this.typeCode ==4){
+        if (this.typeCode == 4)
+        {
             return;
         }
 
