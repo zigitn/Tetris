@@ -8,10 +8,10 @@ import java.util.List;
 
 public class DataBase implements Data
 {
-    private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String DB_URL = "jdbc:sqlserver://127.0.0.1:1433";
+    private static String DRIVER = "com.mysql.jdbc.Driver";
+    private static String DB_URL = "jdbc:mysql://127.0.0.1:3306";
     private static String DB_USER = "tetris";
-    private static String DB_PWD = "Tetris123";
+    private static String DB_PWD = "tetrisdbpass";
 
     static
     {
@@ -30,20 +30,20 @@ public class DataBase implements Data
     public List<PlayerInfo> loadData()
     {
         Connection conn = null;
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         ResultSet rs = null;
         List<PlayerInfo> playerInfoList = new ArrayList<>();
 
         try
         {
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
-            stmt = conn.prepareStatement("select top 5 name,point from name_point order by point desc ");
-            rs = stmt.executeQuery();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("select name,point from Tetris.Tetris order by point desc");
+
             while (rs.next())
             {
                 playerInfoList.add(new PlayerInfo(rs.getString(1), rs.getInt(2)));
             }
-
         }
         catch (SQLException e)
         {
@@ -72,7 +72,7 @@ public class DataBase implements Data
             }
         }
 
-        return playerInfoList;
+       return playerInfoList;
     }
 
     @Override
@@ -83,10 +83,10 @@ public class DataBase implements Data
         try
         {
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
-            stmt = conn.prepareStatement("insert into name_point(name,point) values (?,?)");
-            stmt.setObject(1,playerInfo.getUsername());
-            stmt.setObject(2,playerInfo.getPoint());
-            stmt.execute();
+            stmt = conn.prepareStatement("insert into Tetris.Tetris(name,point) values (?,?)");
+            stmt.setString(1,playerInfo.getUsername());
+            stmt.setInt(2,playerInfo.getPoint());
+            stmt.executeUpdate();
         }
         catch (SQLException e)
         {
@@ -113,5 +113,7 @@ public class DataBase implements Data
         }
 
     }
+
+
 
 }
