@@ -6,8 +6,11 @@ import dao.Data;
 import service.GameService;
 import ui.PanelGame;
 
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
 
 /*接受玩家键盘事件
  * 控制游戏画面
@@ -24,6 +27,9 @@ public class GameControl
     /*游戏逻辑层*/
     private GameService gameService;
 
+    /*游戏行为控制*/
+    private Map<Integer, Method> action;
+
     public GameControl(PanelGame panelGame, GameService gameService)
     {
         this.panelGame = panelGame;
@@ -37,7 +43,21 @@ public class GameControl
         dataDataBase = createDataObject(gameConfig.getDataConfig().getDataBase());
         this.gameService.setDbRecode(dataDataBase.loadData());
 
-    }
+        //初始化游戏行为
+        action = new HashMap<Integer, Method>();
+        try
+        {
+            action.put(KeyEvent.VK_UP, this.gameService.getClass().getMethod("keyUp"));
+            action.put(KeyEvent.VK_DOWN, this.gameService.getClass().getMethod("keyDown"));
+            action.put(KeyEvent.VK_LEFT, this.gameService.getClass().getMethod("keyLeft"));
+            action.put(KeyEvent.VK_RIGHT,this.gameService.getClass().getMethod( "keyRight"));
+            action.put(KeyEvent.VK_E, this.gameService.getClass().getMethod("keyTest"));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+ }
 
     /*创建数据对象*/
     private Data createDataObject(DataInterfaceConfig cfg)
@@ -59,33 +79,19 @@ public class GameControl
         }
     }
 
-    public void keyUp()
+    public void actionByKeyCode(int keyCode)
     {
-        this.gameService.keyUp();
-        this.panelGame.repaint();
-    }
-
-    public void keyDown()
-    {
-        this.gameService.keyDown();
-        this.panelGame.repaint();
-    }
-
-    public void keyLeft()
-    {
-        this.gameService.keyLeft();
-        this.panelGame.repaint();
-    }
-
-    public void keyRight()
-    {
-        this.gameService.keyRight();
-        this.panelGame.repaint();
-    }
-
-    public void keyE()
-    {
-        this.gameService.keyE();
+        if (this.action.containsKey(keyCode))
+        {
+            try
+            {
+                this.action.get(keyCode).invoke(this.gameService);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
         this.panelGame.repaint();
     }
 }

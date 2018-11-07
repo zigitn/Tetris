@@ -1,5 +1,6 @@
 package ui.ui;
 
+import config.gameConfig;
 import ui.Img;
 import ui.Layer;
 
@@ -7,7 +8,7 @@ import java.awt.*;
 
 public class LayerPoint extends Layer
 {
-    private static final double LEVEL_UP = 20;
+    private static final double LEVEL_UP = gameConfig.getSystemConfig().getLevelUp();
 
     public LayerPoint(int x, int y, int w, int h)
     {

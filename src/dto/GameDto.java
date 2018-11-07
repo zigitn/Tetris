@@ -8,6 +8,9 @@ import java.util.List;
 
 public class GameDto
 {
+
+
+
     public GameAct getGameAct()
     {
         return gameAct;

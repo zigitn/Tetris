@@ -13,6 +13,7 @@ public class GameAct
     private static final int maxX = gameConfig.getSystemConfig().getMaxX();
     private static final int maxY = gameConfig.getSystemConfig().getMaxY();
     private static final List<Point[]> TYPE_CONFIG= gameConfig.getSystemConfig().getTypeConfig();
+    private static final List<Boolean> TYPE_ROUND= gameConfig.getSystemConfig().getTypeRound();
 
     public int getTypeCode()
     {
@@ -64,7 +65,7 @@ public class GameAct
 
     public void round(boolean[][] mainGameMap)
     {
-        if (this.typeCode == 4)
+        if (!TYPE_ROUND.get(this.typeCode))
         {
             return;
         }
@@ -91,5 +92,6 @@ public class GameAct
     {
         return x < minX || x > maxX || y < minY || y > maxY || mainGameMap[x][y];
     }
+
 
 }

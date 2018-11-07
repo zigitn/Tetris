@@ -55,17 +55,17 @@ public class GameService
 
     }
 
-    public void keyE()
+
+    
+    //===================================================
+    public void keyTest()
     {
         this.gameDto.setNowLevel(this.gameDto.getNowLevel()+1);
         this.gameDto.setNowPoint(this.gameDto.getNowPoint()+1);
         this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine()+1);
     }
 
-    
-    //===================================================
-    
-    
+
     public void setDbRecode(List<PlayerInfo> loadData)
     {
         this.gameDto.setDbRecode(loadData);

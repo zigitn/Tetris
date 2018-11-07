@@ -1,5 +1,7 @@
 package ui;
 
+import config.gameConfig;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -16,9 +18,8 @@ public class Img
     public static List<Image> BG_LIST;
     static
     {
-        //todo 硬编码
         //下一个方块图片
-        NEXT_ACT = new Image[7];
+        NEXT_ACT = new Image[gameConfig.getSystemConfig().getTypeConfig().size()];
         for (int i = 0; i < NEXT_ACT.length; i++)
         {
             NEXT_ACT[i] = new ImageIcon("./media/game/" + i + ".png").getImage();
