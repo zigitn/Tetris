@@ -2,7 +2,7 @@
 
 
 <game>
-    <frame width="1200" height="700" padding="16" border = "7" title="Tetris">
+    <frame width="1200" height="700" padding="16" border="7" title="Tetris" sizeRol="5">
         <Layer className="ui.ui.LayerAbout" x="0" y="0" w="0" h="0"/>
         <Layer className="ui.ui.LayerBackGround" x="0" y="0" w="0" h="0"/>
         <Layer className="ui.ui.LayerButton" x="788" y="32" w="334" h="124"/>
@@ -13,12 +13,6 @@
         <Layer className="ui.ui.LayerNext" x="788" y="188" w="176" h="148"/>
         <Layer className="ui.ui.LayerPoint" x="788" y="368" w="334" h="200"/>
     </frame>
-
-
-
-    <system>
-
-    </system>
 
     <data>
         <dataBase className="dao.DataBase">
@@ -32,5 +26,56 @@
         </dataDisk>
     </data>
 
+    <system minX="0" maxX="9" minY="0" maxY="17">
+        <rect>
+            <point x="4" y="0"/>
+            <point x="3" y="0"/>
+            <point x="5" y="0"/>
+            <point x="6" y="0"/>
+
+        </rect>
+        <rect>
+            <point x="4" y="0"/>
+            <point x="3" y="0"/>
+            <point x="5" y="0"/>
+            <point x="4" y="1"/>
+
+        </rect>
+        <rect>
+            <point x="4" y="0"/>
+            <point x="3" y="0"/>
+            <point x="5" y="0"/>
+            <point x="3" y="1"/>
+
+        </rect>
+        <rect>
+            <point x="4" y="0"/>
+            <point x="5" y="0"/>
+            <point x="3" y="1"/>
+            <point x="4" y="1"/>
+
+        </rect>
+        <rect>
+            <point x="4" y="0"/>
+            <point x="5" y="0"/>
+            <point x="4" y="1"/>
+            <point x="5" y="1"/>
+
+        </rect>
+        <rect>
+            <point x="4" y="0"/>
+            <point x="3" y="0"/>
+            <point x="5" y="0"/>
+            <point x="5" y="1"/>
+
+        </rect>
+        <rect>
+            <point x="4" y="0"/>
+            <point x="3" y="0"/>
+            <point x="4" y="1"/>
+            <point x="5" y="1"/>
+
+        </rect>
+    </system>
 
 </game>

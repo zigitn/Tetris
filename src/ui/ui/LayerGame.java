@@ -1,5 +1,6 @@
 package ui.ui;
 
+import config.gameConfig;
 import ui.Img;
 import ui.Layer;
 
@@ -7,7 +8,7 @@ import java.awt.*;
 
 public class LayerGame extends Layer
 {
-    private static final int ACT_SIZE_ROL = 5;
+    private static final int ACT_SIZE_ROL = gameConfig.getFrameConfig().getSizeRol();
 
     public LayerGame(int x, int y, int w, int h)
     {

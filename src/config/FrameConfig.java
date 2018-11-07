@@ -12,6 +12,8 @@ public class FrameConfig
     private final int height;
     private final int padding;
     private final int border;
+    private final int sizeRol;
+
     private List<LayerConfig> layersConfig;
 
     public FrameConfig(Element frame)
@@ -20,6 +22,7 @@ public class FrameConfig
         this.height = Integer.parseInt(frame.attributeValue("height"));
         this.border = Integer.parseInt(frame.attributeValue("border"));
         this.padding = Integer.parseInt(frame.attributeValue("padding"));
+        this.sizeRol = Integer.parseInt(frame.attributeValue("sizeRol"));
         this.title = frame.attributeValue("title");
         List<Element> layers = frame.elements("Layer");
         layersConfig = new ArrayList<>();
@@ -56,6 +59,11 @@ public class FrameConfig
     public int getBorder()
     {
         return border;
+    }
+
+    public int getSizeRol()
+    {
+        return sizeRol;
     }
 
     public List<LayerConfig> getLayersConfig()

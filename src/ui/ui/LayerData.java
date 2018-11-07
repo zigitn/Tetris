@@ -16,8 +16,7 @@ public abstract class LayerData extends Layer
     @Override
     abstract public void paint(Graphics g);
 
-
-    public void showData(List<PlayerInfo> playerInfo,Graphics g)
+    public void showData(List<PlayerInfo> playerInfo, Graphics g)
     {
         int nowPoint = this.gameDto.getNowPoint();
         for (int i = 0; i < playerInfo.size(); i++)
