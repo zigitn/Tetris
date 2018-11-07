@@ -3,12 +3,19 @@ package dao;
 import dto.PlayerInfo;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataDisk implements Data
 {
 
-    private static final String FILE_PATH = "./saves/recode.dat";
+    private  final String filePath;
+
+    public DataDisk(HashMap<String,String> param)
+    {
+        this.filePath=param.get("filePath");
+    }
+
 
     @Override
     public void saveData(PlayerInfo playerInfo)
@@ -18,7 +25,7 @@ public class DataDisk implements Data
         ObjectOutputStream oos = null;
         try
         {
-            oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH));
+            oos = new ObjectOutputStream(new FileOutputStream(filePath));
             oos.writeObject(playerInfoList);
         }
         catch (IOException e)
@@ -45,7 +52,7 @@ public class DataDisk implements Data
         List<PlayerInfo> playerInfoList=null;
         try
         {
-            ois = new ObjectInputStream(new FileInputStream(FILE_PATH));
+            ois = new ObjectInputStream(new FileInputStream(filePath));
             playerInfoList=(List<PlayerInfo>) ois.readObject();
         }
         catch (IOException e)

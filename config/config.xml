@@ -21,7 +21,15 @@
     </system>
 
     <data>
-
+        <dataBase className="dao.DataBase">
+            <param key="driver" value="com.mysql.jdbc.Driver"/>
+            <param key="dbUrl" value="jdbc:mysql://127.0.0.1:3306/?useSSL=false"/>
+            <param key="dbUser" value="tetris"/>
+            <param key="dbPwd" value="tetrisdbpass"/>
+        </dataBase>
+        <dataDisk className="dao.DataDisk">
+            <param key="filePath" value="./saves/recode.dat"/>
+        </dataDisk>
     </data>
 
 

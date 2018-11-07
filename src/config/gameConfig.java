@@ -23,15 +23,20 @@ public class gameConfig
             Element game = doc.getRootElement();
             //创建界面配置对象
             FRAME_CONFIG = new FrameConfig(game.element("frame"));
-            //创建数据访问对象
-            DATA_CONFIG = new DataConfig(game.element("data"));
             //创建系统对象
             SYSTEM_CONFIG = new SystemConfig(game.element("system"));
+            //创建数据访问对象
+            DATA_CONFIG = new DataConfig(game.element("data"));
+
         }
         catch (DocumentException e)
         {
             e.printStackTrace();
         }
+    }
+    //构造器私有化
+    private gameConfig()
+    {
     }
 
     /*获得窗口配置*/
@@ -52,10 +57,7 @@ public class gameConfig
         return SYSTEM_CONFIG;
     }
 
-    //构造器私有化
-    private gameConfig()
-    {
-    }
+
 
 }
 

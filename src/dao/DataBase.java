@@ -4,26 +4,28 @@ import dto.PlayerInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataBase implements Data
 {
-    private static String DRIVER = "com.mysql.jdbc.Driver";
-    private static String DB_URL = "jdbc:mysql://127.0.0.1:3306";
-    private static String DB_USER = "tetris";
-    private static String DB_PWD = "tetrisdbpass";
+    private final String dbUrl;
+    private final String dbUser;
+    private final String dbPwd;
 
-    static
+    public DataBase(HashMap<String, String> param)
     {
+        this.dbUrl=param.get("dbUrl");
+        this.dbUser=param.get("dbUser");
+        this.dbPwd=param.get("dbPwd");
         try
         {
-            Class.forName(DRIVER);
+            Class.forName(param.get("driver"));
         }
         catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -36,7 +38,7 @@ public class DataBase implements Data
 
         try
         {
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
+            conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
             stmt = conn.createStatement();
             rs = stmt.executeQuery("select name,point from Tetris.Tetris order by point desc");
 
@@ -72,7 +74,7 @@ public class DataBase implements Data
             }
         }
 
-       return playerInfoList;
+        return playerInfoList;
     }
 
     @Override
@@ -82,10 +84,10 @@ public class DataBase implements Data
         PreparedStatement stmt = null;
         try
         {
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
+            conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
             stmt = conn.prepareStatement("insert into Tetris.Tetris(name,point) values (?,?)");
-            stmt.setString(1,playerInfo.getUsername());
-            stmt.setInt(2,playerInfo.getPoint());
+            stmt.setString(1, playerInfo.getUsername());
+            stmt.setInt(2, playerInfo.getPoint());
             stmt.executeUpdate();
         }
         catch (SQLException e)
@@ -113,7 +115,5 @@ public class DataBase implements Data
         }
 
     }
-
-
 
 }

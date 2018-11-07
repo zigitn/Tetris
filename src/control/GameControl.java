@@ -1,15 +1,17 @@
 package control;
 
+import config.DataInterfaceConfig;
+import config.gameConfig;
 import dao.Data;
-import dao.DataBase;
-import dao.DataDisk;
 import service.GameService;
 import ui.PanelGame;
 
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
 
 /*接受玩家键盘事件
-* 控制游戏画面
-* 控制游戏逻辑*/
+ * 控制游戏画面
+ * 控制游戏逻辑*/
 public class GameControl
 {
 
@@ -22,16 +24,39 @@ public class GameControl
     /*游戏逻辑层*/
     private GameService gameService;
 
-
-    public GameControl(PanelGame panelGame,GameService gameService)
+    public GameControl(PanelGame panelGame, GameService gameService)
     {
         this.panelGame = panelGame;
-        this.gameService= gameService;
-        dataDisk= new DataDisk();
+        this.gameService = gameService;
+
+        /*获得类对象*/
+
+        dataDisk = createDataObject(gameConfig.getDataConfig().getDataDisk());
         this.gameService.setDiskRecode(dataDisk.loadData());
-        dataDataBase= new DataBase();
+
+        dataDataBase = createDataObject(gameConfig.getDataConfig().getDataBase());
         this.gameService.setDbRecode(dataDataBase.loadData());
 
+    }
+
+    /*创建数据对象*/
+    private Data createDataObject(DataInterfaceConfig cfg)
+    {
+        try
+        {
+            /*获得类对象*/
+            Class<?> cls = Class.forName(cfg.getClassName());
+            /*获得构造器*/
+            Constructor<?> ctr = cls.getConstructor(HashMap.class);
+            /*创建对象*/
+            return (Data) ctr.newInstance(cfg.getParam());
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void keyUp()
@@ -47,7 +72,8 @@ public class GameControl
     }
 
     public void keyLeft()
-    {this.gameService.keyLeft();
+    {
+        this.gameService.keyLeft();
         this.panelGame.repaint();
     }
 
