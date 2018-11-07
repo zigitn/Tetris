@@ -22,7 +22,7 @@
             <param key="dbPwd" value="tetrisdbpass"/>
         </dataBase>
         <dataDisk className="dao.DataDisk">
-            <param key="filePath" value="./saves/recode.dat"/>
+            <param key="filePath" value="./data/recode.dat"/>
         </dataDisk>
     </data>
 
