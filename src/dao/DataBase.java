@@ -15,9 +15,9 @@ public class DataBase implements Data
 
     public DataBase(HashMap<String, String> param)
     {
-        this.dbUrl=param.get("dbUrl");
-        this.dbUser=param.get("dbUser");
-        this.dbPwd=param.get("dbPwd");
+        this.dbUrl = param.get("dbUrl");
+        this.dbUser = param.get("dbUser");
+        this.dbPwd = param.get("dbPwd");
         try
         {
             Class.forName(param.get("driver"));
@@ -49,7 +49,9 @@ public class DataBase implements Data
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            //忽略数据库未连接日志
+            //e.printStackTrace();
+            return null;
         }
         finally
         {

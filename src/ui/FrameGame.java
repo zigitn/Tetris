@@ -1,10 +1,10 @@
 package ui;
 
+import Util.FrameUtil;
 import config.FrameConfig;
 import config.gameConfig;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class FrameGame extends JFrame
 {
@@ -25,9 +25,9 @@ public class FrameGame extends JFrame
         this.setResizable(false);
 
         //令窗口居中
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screen = toolkit.getScreenSize();
-        this.setLocation(screen.width - this.getWidth() >> 1, (screen.height - this.getHeight() >> 1) - 50);
+        FrameUtil.setFrameToCenter(this);
+
+        //设置默认panel
         this.setContentPane(panelGame);
 
         //显示本Frame
