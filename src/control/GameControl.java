@@ -5,12 +5,15 @@ import config.gameConfig;
 import dao.Data;
 import service.GameService;
 import ui.PanelGame;
+import ui.cfg.FrameSet;
 
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /*接受玩家键盘事件
  * 控制游戏画面
@@ -20,6 +23,7 @@ public class GameControl
 
     private Data dataDisk;
     private Data dataDataBase;
+    private Properties PROP = new Properties();
 
     /*游戏界面层*/
     private PanelGame panelGame;
@@ -42,22 +46,30 @@ public class GameControl
 
         dataDataBase = createDataObject(gameConfig.getDataConfig().getDataBase());
         this.gameService.setDbRecode(dataDataBase.loadData());
+        setKeyProfile();
 
-        //初始化游戏行为
+    }
+
+    private void setKeyProfile()
+    {
         action = new HashMap<Integer, Method>();
         try
         {
-            action.put(KeyEvent.VK_UP, this.gameService.getClass().getMethod("keyUp"));
-            action.put(KeyEvent.VK_DOWN, this.gameService.getClass().getMethod("keyDown"));
-            action.put(KeyEvent.VK_LEFT, this.gameService.getClass().getMethod("keyLeft"));
-            action.put(KeyEvent.VK_RIGHT,this.gameService.getClass().getMethod( "keyRight"));
-            action.put(KeyEvent.VK_E, this.gameService.getClass().getMethod("keyTest"));
+            FileInputStream fis = new FileInputStream("./data/control.Properties");
+            PROP.load(fis);
+            action.put((int) PROP.getProperty("up").charAt(0), this.gameService.getClass().getMethod("up"));
+            action.put((int) PROP.getProperty("down").charAt(0), this.gameService.getClass().getMethod("down"));
+            action.put((int) PROP.getProperty("left").charAt(0), this.gameService.getClass().getMethod("left"));
+            action.put((int) PROP.getProperty("right").charAt(0), this.gameService.getClass().getMethod("right"));
+            action.put((int) PROP.getProperty("cheat").charAt(0), this.gameService.getClass().getMethod("cheat"));
+
+            fis.close();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
- }
+    }
 
     /*创建数据对象*/
     private Data createDataObject(DataInterfaceConfig cfg)

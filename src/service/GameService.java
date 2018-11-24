@@ -23,12 +23,12 @@ public class GameService
         gameDto.setGameAct(gameAct);
     }
 
-    public void keyUp()
+    public void up()
     {
         this.gameDto.getGameAct().round(this.gameDto.getGameMainMap());
     }
 
-    public void keyDown()
+    public void down()
     {
         if (!this.gameDto.getGameAct().move(0, 1, this.gameDto.getGameMainMap()))
         {
@@ -44,27 +44,24 @@ public class GameService
         }
     }
 
-    public void keyLeft()
+    public void left()
     {
         this.gameDto.getGameAct().move(-1, 0, this.gameDto.getGameMainMap());
     }
 
-    public void keyRight()
+    public void right()
     {
         this.gameDto.getGameAct().move(1, 0, this.gameDto.getGameMainMap());
 
     }
 
-
-    
     //===================================================
-    public void keyTest()
+    public void cheat()
     {
-        this.gameDto.setNowLevel(this.gameDto.getNowLevel()+1);
-        this.gameDto.setNowPoint(this.gameDto.getNowPoint()+1);
-        this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine()+1);
+        this.gameDto.setNowLevel(this.gameDto.getNowLevel() + 1);
+        this.gameDto.setNowPoint(this.gameDto.getNowPoint() + 1);
+        this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine() + 1);
     }
-
 
     public void setDbRecode(List<PlayerInfo> loadData)
     {

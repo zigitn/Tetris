@@ -25,8 +25,8 @@ public abstract class Layer
         FrameConfig fCfg = gameConfig.getFrameConfig();
         BORDER = fCfg.getBorder();
         PADDING = fCfg.getPadding();
-        WINDOW_H=fCfg.getHeight();
-        WINDOW_W=fCfg.getWidth();
+        WINDOW_H = fCfg.getHeight();
+        WINDOW_W = fCfg.getWidth();
     }
 
     private static Image IMG = new ImageIcon("./media/window/Window.png").getImage();

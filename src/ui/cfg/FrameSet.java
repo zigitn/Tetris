@@ -4,8 +4,6 @@ import Util.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,39 +12,45 @@ import java.util.Properties;
 public class FrameSet extends JFrame
 {
 
-    private static List<JTextField> TextList = new ArrayList<>();
+    private static List<JComboBox<String>> comboBoxes = new ArrayList<>();
     private static List<JLabel> Labels = new ArrayList<>();
 
     private JButton OJBK = new JButton("确定");
     private JButton CANCEL = new JButton("取消");
     private JButton APPLY = new JButton("应用");
+
     private Properties PROP = new Properties();
 
-    private static JTextField jtfUp = new JTextField();
-    private static JTextField jtfDown = new JTextField();
-    private static JTextField jtfLeft = new JTextField();
-    private static JTextField jtfRight = new JTextField();
-    private static JTextField jtfCheat = new JTextField();
+    private static final String[] keyList = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+                                             "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    };
+    private static final String[] keyNameList = {"up", "down", "left", "right", "cheat"};
+    private static final String[] labelNameList;
+    private static JComboBox<String> jcbUp = new JComboBox<>(keyList);
+    private static JComboBox<String> jcbDown = new JComboBox<>(keyList);
+    private static JComboBox<String> jcbLeft = new JComboBox<>(keyList);
+    private static JComboBox<String> jcbRight = new JComboBox<>(keyList);
+    private static JComboBox<String> jcbCheat = new JComboBox<>(keyList);
 
     static
     {
-        Labels.add(new JLabel("上:"));
-        Labels.add(new JLabel("下:"));
-        Labels.add(new JLabel("左:"));
-        Labels.add(new JLabel("右:"));
-        Labels.add(new JLabel("作弊:"));
+        labelNameList = new String[]{"旋转", "下", "左", "右", "作弊"};
+        for (String labelName : labelNameList)
+        {
+            Labels.add(new JLabel(labelName+":"));
+        }
 
-        TextList.add(jtfUp);
-        TextList.add(jtfDown);
-        TextList.add(jtfLeft);
-        TextList.add(jtfRight);
-        TextList.add(jtfCheat);
+        comboBoxes.add(jcbUp);
+        comboBoxes.add(jcbDown);
+        comboBoxes.add(jcbLeft);
+        comboBoxes.add(jcbRight);
+        comboBoxes.add(jcbCheat);
     }
 
     public FrameSet()
     {
         //固定窗口位置及大小
-        this.setSize(300, 300);
+        this.setSize(500, 300);
         this.setResizable(false);
         FrameUtil.setFrameToCenter(this);
 
@@ -84,15 +88,15 @@ public class FrameSet extends JFrame
         //显示Label
         for (int i = 0; i < Labels.size(); i++)
         {
-            Labels.get(i).setBounds(i < 4 ? 10 : 160, 10 + 40 * (i < 4 ? i : i - 4), 30, 30);
+            Labels.get(i).setBounds(i < 4 ? 10 : 220, 10 + 40 * (i < 4 ? i : i - 4), 30, 30);
             ctrlPanel.add(Labels.get(i));
         }
 
         //显示文本输入框
-        for (int i = 0; i < TextList.size(); i++)
+        for (int i = 0; i < comboBoxes.size(); i++)
         {
-            TextList.get(i).setBounds(i < 4 ? 30 : 190, 10 + 40 * (i < 4 ? i : i - 4), 60, 30);
-            ctrlPanel.add(TextList.get(i));
+            comboBoxes.get(i).setBounds(i < 4 ? 40 : 250, 10 + 40 * (i < 4 ? i : i - 4), 60, 30);
+            ctrlPanel.add(comboBoxes.get(i));
         }
 
         return ctrlPanel;
@@ -113,15 +117,11 @@ public class FrameSet extends JFrame
 
         buttonPanel.add(OJBK);
 
-        OJBK.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-                writeProfile(PROP);
-                setVisible(false);
-            }
-        });
+        OJBK.addActionListener(actionEvent ->
+                               {
+                                   writeProfile(PROP);
+                                   setVisible(false);
+                               });
 
         //取消按钮
         buttonPanel.add(CANCEL);
@@ -145,6 +145,10 @@ public class FrameSet extends JFrame
         {
             FileInputStream fis = new FileInputStream("./data/control.Properties");
             PROP.load(fis);
+            for (int i = 0; i < keyNameList.length; i++)
+            {
+                comboBoxes.get(i).setSelectedItem(PROP.getProperty(keyNameList[i]));
+            }
             fis.close();
         }
         catch (Exception e)
@@ -155,12 +159,20 @@ public class FrameSet extends JFrame
 
     private void writeProfile(Properties prop)
     {
+
         //获取设置键位
-        PROP.setProperty("Up",jtfUp.getText());
-        PROP.setProperty("Down",jtfDown.getText());
-        PROP.setProperty("Left",jtfLeft.getText());
-        PROP.setProperty("Right",jtfRight.getText());
-        PROP.setProperty("Cheat",jtfCheat.getText());
+        for (int i = 0; i < keyNameList.length; i++)
+        {
+            for (int j = 0; j != i && j < keyNameList.length; j++)
+            {
+                if (comboBoxes.get(i).getSelectedItem() == comboBoxes.get(j).getSelectedItem())
+                {
+                    JOptionPane.showMessageDialog(null, labelNameList[i] + " 与 " + labelNameList[j] + " 冲突");
+                    return;
+                }
+            }
+            PROP.setProperty(keyNameList[i], (String) comboBoxes.get(i).getSelectedItem());
+        }
         //写入配置文件
         FileOutputStream fos = null;
         try
@@ -187,7 +199,4 @@ public class FrameSet extends JFrame
             }
         }
     }
-
-
-
 }
