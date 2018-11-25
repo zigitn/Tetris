@@ -3,6 +3,7 @@ package ui;
 import config.FrameConfig;
 import config.LayerConfig;
 import config.gameConfig;
+import control.GameControl;
 import control.PlayerControl;
 import dto.GameDto;
 
@@ -18,20 +19,22 @@ public class PanelGame extends JPanel
 
     private GameDto gameDto;
 
+
+
+    private GameControl gameControl=null;
     public PanelGame(GameDto gameDto)
     {
         this.gameDto = gameDto;
         initComponent();
         initLayer();
+
     }
 
-    public void setGameControl(PlayerControl playerControl)
-    {
-        this.addKeyListener(playerControl);
-    }
+
 
     private void initComponent()
     {
+
     }
 
     private void initLayer()
@@ -69,6 +72,15 @@ public class PanelGame extends JPanel
             layer.paint(g);
         }
         this.requestFocus();
+    }
+
+    public void setGameControl(PlayerControl playerControl)
+    {
+        this.addKeyListener(playerControl);
+    }
+    public void setGameControl(GameControl gameControl)
+    {
+        this.gameControl = gameControl;
     }
 }
 

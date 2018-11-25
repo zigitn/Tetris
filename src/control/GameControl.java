@@ -34,6 +34,8 @@ public class GameControl
     /*游戏行为控制*/
     private Map<Integer, Method> action;
 
+    private FrameSet frameSet;
+
     public GameControl(PanelGame panelGame, GameService gameService)
     {
         this.panelGame = panelGame;
@@ -47,7 +49,7 @@ public class GameControl
         dataDataBase = createDataObject(gameConfig.getDataConfig().getDataBase());
         this.gameService.setDbRecode(dataDataBase.loadData());
         setKeyProfile();
-
+        this.frameSet=new FrameSet();
     }
 
     private void setKeyProfile()
@@ -105,5 +107,10 @@ public class GameControl
             }
         }
         this.panelGame.repaint();
+    }
+
+    public void showFrameSet()
+    {
+        this.frameSet.setVisible(true);
     }
 }

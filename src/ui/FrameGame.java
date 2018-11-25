@@ -5,12 +5,13 @@ import config.FrameConfig;
 import config.gameConfig;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class FrameGame extends JFrame
 {
+    private JMenuBar menuBar=new MenuBar();
     public FrameGame(PanelGame panelGame)
     {
-
         //默认关闭属性
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -28,6 +29,7 @@ public class FrameGame extends JFrame
         FrameUtil.setFrameToCenter(this);
 
         //设置默认panel
+        this.setJMenuBar(menuBar);
         this.setContentPane(panelGame);
 
         //显示本Frame

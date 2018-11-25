@@ -64,10 +64,8 @@ public class FrameSet extends JFrame
 
         //获取配置文件
         loadProfile();
-        //测试
-        this.setDefaultCloseOperation(3);
-        this.setVisible(true);
     }
+
 
     /*创建主面板(包含两选项卡)*/
     private JTabbedPane MainTabPanel()

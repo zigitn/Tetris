@@ -23,9 +23,11 @@ public class main
 
         //游戏控制器
         GameControl gameControl=new GameControl(panel,gameService);
+
+        panel.setGameControl(gameControl);
+
+
         PlayerControl playerControl=new PlayerControl(gameControl);
-
-
         panel.setGameControl(playerControl);
         new FrameGame(panel);
     }
