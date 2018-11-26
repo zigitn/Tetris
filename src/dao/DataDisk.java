@@ -55,13 +55,8 @@ public class DataDisk implements Data
             ois = new ObjectInputStream(new FileInputStream(filePath));
             playerInfoList=(List<PlayerInfo>) ois.readObject();
         }
-        catch (IOException e)
+        catch (Exception e)
         {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
         }
         finally
         {
@@ -69,9 +64,8 @@ public class DataDisk implements Data
             {
                 ois.close();
             }
-            catch (IOException e)
+            catch (Exception e)
             {
-                e.printStackTrace();
             }
         } return playerInfoList;
     }

@@ -32,16 +32,47 @@ public class GameService
     {
         if (!this.gameDto.getGameAct().move(0, 1, this.gameDto.getGameMainMap()))
         {
-
             boolean[][] map = this.gameDto.getGameMainMap();
             Point[] act = this.gameDto.getGameAct().getActPoints();
-            for (int i = 0; i < act.length; i++)
+            for (Point point : act)
             {
-                map[act[i].x][act[i].y] = true;
+                map[point.x][point.y] = true;
             }
             this.gameDto.getGameAct().init(this.gameDto.getNext());
             this.gameDto.setNext(random.nextInt(MAX_TYPE));
+            this.checkRemoveLine();
         }
+    }
+
+    private void checkRemoveLine()
+    {
+        for (int y = 17; y > 0; y--)
+        {
+            if (canRemoveline(y))
+            {
+                checkRemoveLine();
+            }
+        }
+    }
+
+    private boolean canRemoveline(int y)
+    {
+        boolean[][] mainMap = gameDto.getGameMainMap();
+        for (int x = 0; x < 10; x++)
+        {
+            if (!mainMap[x][y])
+            {
+                return false;
+            }
+        }
+        for (int i = y; i > 0; i--)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                mainMap[x][i] = mainMap[x][i - 1];
+            }
+        }
+        return true;
     }
 
     public void left()
