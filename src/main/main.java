@@ -29,7 +29,7 @@ public class main
 
         PlayerControl playerControl=new PlayerControl(gameControl);
         panel.setGameControl(playerControl);
-        new FrameGame(panel);
+        new FrameGame(panel,gameControl);
     }
 
 

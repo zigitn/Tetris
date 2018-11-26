@@ -4,6 +4,7 @@ import config.DataInterfaceConfig;
 import config.gameConfig;
 import dao.Data;
 import service.GameService;
+import ui.MenuBar;
 import ui.PanelGame;
 import ui.cfg.FrameSet;
 
@@ -49,10 +50,9 @@ public class GameControl
         dataDataBase = createDataObject(gameConfig.getDataConfig().getDataBase());
         this.gameService.setDbRecode(dataDataBase.loadData());
         setKeyProfile();
-        this.frameSet=new FrameSet();
     }
 
-    private void setKeyProfile()
+    public void setKeyProfile()
     {
         action = new HashMap<Integer, Method>();
         try
@@ -111,6 +111,6 @@ public class GameControl
 
     public void showFrameSet()
     {
-        this.frameSet.setVisible(true);
+        this.frameSet=new FrameSet(this);
     }
 }

@@ -1,23 +1,25 @@
 package ui;
 
-import ui.cfg.FrameSet;
+import control.GameControl;
+
 import javax.swing.*;
 
 public class MenuBar extends JMenuBar
 {
-    private FrameSet frameSet = new FrameSet();
+    private GameControl gameControl;
 
-    public MenuBar()
+    public MenuBar(GameControl gameControl)
     {
+        this.gameControl = gameControl;
         this.add(createMenuBar());
     }
 
     private JMenu createMenuBar()
     {
         JMenu menu = new JMenu("菜单");
-        JMenuItem item = new JMenu("设置");
+        JMenuItem item = new JMenuItem("设置");
         menu.add(item);
-        item.addActionListener(actionEvent -> frameSet.setVisible(true));
+        item.addActionListener(actionEvent -> gameControl.showFrameSet());
         return menu;
     }
 }

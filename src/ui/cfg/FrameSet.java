@@ -1,6 +1,7 @@
 package ui.cfg;
 
 import Util.FrameUtil;
+import control.GameControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.util.Properties;
 
 public class FrameSet extends JFrame
 {
-
+    private GameControl gameControl;
     private static List<JComboBox<String>> comboBoxes = new ArrayList<>();
     private static List<JLabel> Labels = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class FrameSet extends JFrame
         labelNameList = new String[]{"旋转", "下", "左", "右", "作弊"};
         for (String labelName : labelNameList)
         {
-            Labels.add(new JLabel(labelName+":"));
+            Labels.add(new JLabel(labelName + ":"));
         }
 
         comboBoxes.add(jcbUp);
@@ -47,8 +48,9 @@ public class FrameSet extends JFrame
         comboBoxes.add(jcbCheat);
     }
 
-    public FrameSet()
+    public FrameSet(GameControl gameControl)
     {
+        this.gameControl = gameControl;
         //固定窗口位置及大小
         this.setSize(500, 300);
         this.setResizable(false);
@@ -65,7 +67,6 @@ public class FrameSet extends JFrame
         //获取配置文件
         loadProfile();
     }
-
 
     /*创建主面板(包含两选项卡)*/
     private JTabbedPane MainTabPanel()
@@ -118,24 +119,21 @@ public class FrameSet extends JFrame
         OJBK.addActionListener(actionEvent ->
                                {
                                    writeProfile(PROP);
-                                   setVisible(false);
+                                   this.dispose();
                                });
 
         //取消按钮
         buttonPanel.add(CANCEL);
-        CANCEL.addActionListener(actionEvent -> this.setVisible(false));
+        CANCEL.addActionListener(actionEvent -> this.dispose());
 
         //应用按钮
         buttonPanel.add(APPLY);
         APPLY.addActionListener(actionEvent -> writeProfile(PROP));
+        this.setVisible(true);
         return buttonPanel;
-    }
-
-    public static void main(String[] args)
-    {
-        new FrameSet();
 
     }
+
 
     private void loadProfile()
     {
@@ -177,6 +175,8 @@ public class FrameSet extends JFrame
         {
             fos = new FileOutputStream("./data/control.Properties");
             prop.store(fos, "Key profile");
+            gameControl.setKeyProfile();
+
         }
         catch (Exception e)
         {
