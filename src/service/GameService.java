@@ -16,6 +16,7 @@ public class GameService
     private Random random = new Random();
     private static final int MAX_TYPE = 6;
 
+    private int countRemoveLine = 0;
     public GameService(GameDto gameDto)
     {
         this.gameDto = gameDto;
@@ -41,6 +42,9 @@ public class GameService
             this.gameDto.getGameAct().init(this.gameDto.getNext());
             this.gameDto.setNext(random.nextInt(MAX_TYPE));
             this.checkRemoveLine();
+            int nowPoint=gameDto.getNowPoint();
+            gameDto.setNowPoint(countRemoveLine>0?nowPoint+(countRemoveLine<<1)-1:nowPoint);
+            countRemoveLine=0;
         }
     }
 
@@ -50,6 +54,8 @@ public class GameService
         {
             if (canRemoveline(y))
             {
+                gameDto.setNowRemoveLine(gameDto.getNowRemoveLine() + 1);
+                countRemoveLine++;
                 checkRemoveLine();
             }
         }
