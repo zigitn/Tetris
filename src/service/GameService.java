@@ -1,5 +1,6 @@
 package service;
 
+import config.gameConfig;
 import dto.GameDto;
 import dto.PlayerInfo;
 import entity.GameAct;
@@ -15,8 +16,11 @@ public class GameService
 
     private Random random = new Random();
     private static final int MAX_TYPE = 6;
+    private static final double LEVEL_UP = gameConfig.getSystemConfig().getLevelUp();
 
     private int countRemoveLine = 0;
+    private int sumRemoveLine = 0;
+
     public GameService(GameDto gameDto)
     {
         this.gameDto = gameDto;
@@ -41,12 +45,21 @@ public class GameService
             }
             this.gameDto.getGameAct().init(this.gameDto.getNext());
             this.gameDto.setNext(random.nextInt(MAX_TYPE));
+
             this.checkRemoveLine();
+
             int nowPoint=gameDto.getNowPoint();
-            gameDto.setNowPoint(countRemoveLine>0?nowPoint+(countRemoveLine<<1)-1:nowPoint);
+
+            gameDto.setNowPoint(countRemoveLine>0?nowPoint+((countRemoveLine-1)<<1):nowPoint);
+            if (sumRemoveLine%20==1&&sumRemoveLine!=1)
+            {
+                gameDto.setNowLevel(gameDto.getNowLevel()+1);
+            }
+
             countRemoveLine=0;
         }
     }
+
 
     private void checkRemoveLine()
     {
@@ -56,6 +69,7 @@ public class GameService
             {
                 gameDto.setNowRemoveLine(gameDto.getNowRemoveLine() + 1);
                 countRemoveLine++;
+                sumRemoveLine++;
                 checkRemoveLine();
             }
         }
