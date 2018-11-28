@@ -1,16 +1,13 @@
 package control;
 
-import config.DataInterfaceConfig;
-import config.gameConfig;
 import dao.Data;
+import dao.DataBase;
+import dao.DataDisk;
 import service.GameService;
-import ui.MenuBar;
 import ui.PanelGame;
 import ui.cfg.FrameSet;
 
-import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +19,8 @@ import java.util.Properties;
 public class GameControl
 {
 
-    private Data dataDisk;
-    private Data dataDataBase;
-    private Properties PROP = new Properties();
+    private Data dataDisk =new DataDisk();
+    private Data dataDataBase= new DataBase();
 
     /*游戏界面层*/
     private PanelGame panelGame;
@@ -44,10 +40,8 @@ public class GameControl
 
         /*获得类对象*/
 
-        dataDisk = createDataObject(gameConfig.getDataConfig().getDataDisk());
         this.gameService.setDiskRecode(dataDisk.loadData());
 
-        dataDataBase = createDataObject(gameConfig.getDataConfig().getDataBase());
         this.gameService.setDbRecode(dataDataBase.loadData());
         setKeyProfile();
     }
@@ -57,6 +51,7 @@ public class GameControl
         action = new HashMap<Integer, Method>();
         try
         {
+            Properties PROP = new Properties();
             FileInputStream fis = new FileInputStream("./data/control.Properties");
             PROP.load(fis);
             action.put((int) PROP.getProperty("up").charAt(0), this.gameService.getClass().getMethod("up"));
@@ -73,25 +68,6 @@ public class GameControl
         }
     }
 
-    /*创建数据对象*/
-    private Data createDataObject(DataInterfaceConfig cfg)
-    {
-        try
-        {
-            /*获得类对象*/
-            Class<?> cls = Class.forName(cfg.getClassName());
-            /*获得构造器*/
-            Constructor<?> ctr = cls.getConstructor(HashMap.class);
-            /*创建对象*/
-            return (Data) ctr.newInstance(cfg.getParam());
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public void actionByKeyCode(int keyCode)
     {

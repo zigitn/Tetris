@@ -1,32 +1,18 @@
 package dao;
 
+import config.GameConfig;
 import dto.PlayerInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DataBase implements Data
 {
-    private final String dbUrl;
-    private final String dbUser;
-    private final String dbPwd;
-
-    public DataBase(HashMap<String, String> param)
-    {
-        this.dbUrl = param.get("dbUrl");
-        this.dbUser = param.get("dbUser");
-        this.dbPwd = param.get("dbPwd");
-        try
-        {
-            Class.forName(param.get("driver"));
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
+    private String driver = GameConfig.getSystemConfig().getDbdriver();
+    private String dbAddress = GameConfig.getSystemConfig().getDbAddress();
+    private String dbUser = GameConfig.getSystemConfig().getDbUser();
+    private String dbPwd = GameConfig.getSystemConfig().getDbPwd();
 
     @Override
     public List<PlayerInfo> loadData()
@@ -38,7 +24,8 @@ public class DataBase implements Data
 
         try
         {
-            conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
+            Class.forName(driver);
+            conn = DriverManager.getConnection(dbAddress, dbUser, dbPwd);
             stmt = conn.createStatement();
             rs = stmt.executeQuery("select name,point from Tetris.Tetris order by point desc");
 
@@ -47,7 +34,7 @@ public class DataBase implements Data
                 playerInfoList.add(new PlayerInfo(rs.getString(1), rs.getInt(2)));
             }
         }
-        catch (SQLException e)
+        catch (Exception e)
         {
             //忽略数据库未连接日志
             //e.printStackTrace();
@@ -86,13 +73,15 @@ public class DataBase implements Data
         PreparedStatement stmt = null;
         try
         {
-            conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
+            Class.forName(driver);
+
+            conn = DriverManager.getConnection(dbAddress, dbUser, dbPwd);
             stmt = conn.prepareStatement("insert into Tetris.Tetris(name,point) values (?,?)");
             stmt.setString(1, playerInfo.getUsername());
             stmt.setInt(2, playerInfo.getPoint());
             stmt.executeUpdate();
         }
-        catch (SQLException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }

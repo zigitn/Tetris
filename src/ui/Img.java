@@ -1,6 +1,6 @@
 package ui;
 
-import config.gameConfig;
+import config.GameConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class Img
     static
     {
         //下一个方块图片
-        NEXT_ACT = new Image[gameConfig.getSystemConfig().getTypeConfig().size()];
+        NEXT_ACT = new Image[GameConfig.getSystemConfig().getTypeConfig().size()];
         for (int i = 0; i < NEXT_ACT.length; i++)
         {
             NEXT_ACT[i] = new ImageIcon("./media/game/" + i + ".png").getImage();

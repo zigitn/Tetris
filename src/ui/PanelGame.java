@@ -2,7 +2,7 @@ package ui;
 
 import config.FrameConfig;
 import config.LayerConfig;
-import config.gameConfig;
+import config.GameConfig;
 import control.GameControl;
 import control.PlayerControl;
 import dto.GameDto;
@@ -41,7 +41,7 @@ public class PanelGame extends JPanel
     {
         try
         {
-            FrameConfig fCfg = gameConfig.getFrameConfig();
+            FrameConfig fCfg = GameConfig.getFrameConfig();
             List<LayerConfig> layersCfg = fCfg.getLayersConfig();
             layers = new ArrayList<>(layersCfg.size());
             for (LayerConfig layerCfg : layersCfg)

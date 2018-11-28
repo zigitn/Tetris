@@ -1,20 +1,15 @@
 package dao;
 
+import config.GameConfig;
 import dto.PlayerInfo;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
 
 public class DataDisk implements Data
 {
 
-    private  final String filePath;
-
-    public DataDisk(HashMap<String,String> param)
-    {
-        this.filePath=param.get("filePath");
-    }
+    private final String filePath=GameConfig.getSystemConfig().getLocalfilepath();
 
 
     @Override

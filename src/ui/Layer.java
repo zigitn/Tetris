@@ -1,7 +1,7 @@
 package ui;
 
 import config.FrameConfig;
-import config.gameConfig;
+import config.GameConfig;
 import dto.GameDto;
 
 import javax.swing.*;
@@ -22,7 +22,7 @@ public abstract class Layer
 
     static
     {
-        FrameConfig fCfg = gameConfig.getFrameConfig();
+        FrameConfig fCfg = GameConfig.getFrameConfig();
         BORDER = fCfg.getBorder();
         PADDING = fCfg.getPadding();
         WINDOW_H = fCfg.getHeight();

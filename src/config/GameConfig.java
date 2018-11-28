@@ -7,7 +7,7 @@ import org.dom4j.io.SAXReader;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-public class gameConfig
+public class GameConfig
 {
     private static FrameConfig FRAME_CONFIG = null;
     private static DataConfig DATA_CONFIG = null;
@@ -47,7 +47,7 @@ public class gameConfig
         }
     }
     //构造器私有化
-    private gameConfig()
+    private GameConfig()
     {
     }
 

@@ -3,7 +3,6 @@ package config;
 import org.dom4j.Element;
 
 import java.awt.*;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -18,6 +17,36 @@ public class SystemConfig
     private final List<Boolean> typeRound;
     private final List<Point[]> typeConfig;
 
+    public String getDbdriver()
+    {
+        return dbdriver;
+    }
+
+    public String getDbAddress()
+    {
+        return dbAddress;
+    }
+
+    public String getDbUser()
+    {
+        return dbUser;
+    }
+
+    public String getDbPwd()
+    {
+        return dbPwd;
+    }
+
+    public String getLocalfilepath()
+    {
+        return localfilepath;
+    }
+
+    private final String dbdriver;
+    private final String dbAddress;
+    private final String dbUser;
+    private final String dbPwd;
+    private final String localfilepath;
 
 
     public SystemConfig(Element system, Properties systemSettings)
@@ -27,6 +56,11 @@ public class SystemConfig
         this.minY = Integer.parseInt(systemSettings.getProperty("minY"));
         this.maxY = Integer.parseInt(systemSettings.getProperty("maxY"));
         this.levelUp = Integer.parseInt(systemSettings.getProperty("levelUp"));
+        this.dbdriver = systemSettings.getProperty("dbdriver");
+        this.dbAddress = systemSettings.getProperty("dbAddress");
+        this.dbUser = systemSettings.getProperty("dbUser");
+        this.dbPwd = systemSettings.getProperty("dbPwd");
+        this.localfilepath = systemSettings.getProperty("filePath");
 
 
 

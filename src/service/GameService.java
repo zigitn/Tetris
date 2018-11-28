@@ -1,6 +1,6 @@
 package service;
 
-import config.gameConfig;
+import config.GameConfig;
 import dto.GameDto;
 import dto.PlayerInfo;
 import entity.GameAct;
@@ -16,7 +16,7 @@ public class GameService
 
     private Random random = new Random();
     private static final int MAX_TYPE = 6;
-    private static final double LEVEL_UP = gameConfig.getSystemConfig().getLevelUp();
+    private static final double LEVEL_UP = GameConfig.getSystemConfig().getLevelUp();
 
     private int countRemoveLine = 0;
     private int sumRemoveLine = 0;
@@ -63,7 +63,7 @@ public class GameService
     {
         for (int y = 17; y > 0; y--)
         {
-            if (canRemoveline(y))
+            if (canRemoveLine(y))
             {
                 gameDto.setNowRemoveLine(gameDto.getNowRemoveLine() + 1);
                 countRemoveLine++;
@@ -73,7 +73,7 @@ public class GameService
         }
     }
 
-    private boolean canRemoveline(int y)
+    private boolean canRemoveLine(int y)
     {
         boolean[][] mainMap = gameDto.getGameMainMap();
         for (int x = 0; x < 10; x++)

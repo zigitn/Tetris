@@ -1,6 +1,6 @@
 package entity;
 
-import config.gameConfig;
+import config.GameConfig;
 import java.awt.*;
 import java.util.List;
 
@@ -8,12 +8,12 @@ public class GameAct
 {
     private Point[] actPoints;
 
-    private static final int minX = gameConfig.getSystemConfig().getMinX();
-    private static final int minY = gameConfig.getSystemConfig().getMinY();
-    private static final int maxX = gameConfig.getSystemConfig().getMaxX();
-    private static final int maxY = gameConfig.getSystemConfig().getMaxY();
-    private static final List<Point[]> TYPE_CONFIG= gameConfig.getSystemConfig().getTypeConfig();
-    private static final List<Boolean> TYPE_ROUND= gameConfig.getSystemConfig().getTypeRound();
+    private static final int minX = GameConfig.getSystemConfig().getMinX();
+    private static final int minY = GameConfig.getSystemConfig().getMinY();
+    private static final int maxX = GameConfig.getSystemConfig().getMaxX();
+    private static final int maxY = GameConfig.getSystemConfig().getMaxY();
+    private static final List<Point[]> TYPE_CONFIG= GameConfig.getSystemConfig().getTypeConfig();
+    private static final List<Boolean> TYPE_ROUND= GameConfig.getSystemConfig().getTypeRound();
 
     public int getTypeCode()
     {

@@ -2,7 +2,7 @@ package ui;
 
 import Util.FrameUtil;
 import config.FrameConfig;
-import config.gameConfig;
+import config.GameConfig;
 import control.GameControl;
 
 import javax.swing.*;
@@ -15,7 +15,7 @@ public class FrameGame extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //配置读取器
-        FrameConfig fCfg = gameConfig.getFrameConfig();
+        FrameConfig fCfg = GameConfig.getFrameConfig();
 
         //设置标题
         this.setTitle(fCfg.getTitle());
