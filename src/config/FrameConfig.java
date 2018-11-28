@@ -4,6 +4,7 @@ import org.dom4j.Element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class FrameConfig
 {
@@ -16,7 +17,7 @@ public class FrameConfig
 
     private List<LayerConfig> layersConfig;
 
-    public FrameConfig(Element frame)
+    public FrameConfig(Element frame, Properties systemSettings)
     {
         this.width = Integer.parseInt(frame.attributeValue("width"));
         this.height = Integer.parseInt(frame.attributeValue("height"));
