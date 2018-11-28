@@ -45,7 +45,6 @@ public class GameService
             }
             this.gameDto.getGameAct().init(this.gameDto.getNext());
             this.gameDto.setNext(random.nextInt(MAX_TYPE));
-
             this.checkRemoveLine();
 
             int nowPoint=gameDto.getNowPoint();
@@ -59,7 +58,6 @@ public class GameService
             countRemoveLine=0;
         }
     }
-
 
     private void checkRemoveLine()
     {
