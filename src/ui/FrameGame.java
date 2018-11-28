@@ -4,6 +4,7 @@ import Util.FrameUtil;
 import config.FrameConfig;
 import config.GameConfig;
 import control.GameControl;
+import ui.cfg.MenuBar;
 
 import javax.swing.*;
 

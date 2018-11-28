@@ -17,14 +17,15 @@ public class FrameConfig
 
     private List<LayerConfig> layersConfig;
 
-    public FrameConfig(Element frame, Properties systemSettings)
+    public FrameConfig(Element frame, Properties PROP)
     {
-        this.width = Integer.parseInt(frame.attributeValue("width"));
-        this.height = Integer.parseInt(frame.attributeValue("height"));
-        this.border = Integer.parseInt(frame.attributeValue("border"));
-        this.padding = Integer.parseInt(frame.attributeValue("padding"));
-        this.sizeRol = Integer.parseInt(frame.attributeValue("sizeRol"));
-        this.title = frame.attributeValue("title");
+        this.width = Integer.parseInt(PROP.getProperty("width"));
+        this.height = Integer.parseInt(PROP.getProperty("height"));
+        this.border = Integer.parseInt(PROP.getProperty("border"));
+        this.padding = Integer.parseInt(PROP.getProperty("padding"));
+        this.sizeRol = Integer.parseInt(PROP.getProperty("sizeRol"));
+        this.title = PROP.getProperty("title");
+        
         List<Element> layers = frame.elements("Layer");
         layersConfig = new ArrayList<>();
         for (Element layer : layers)

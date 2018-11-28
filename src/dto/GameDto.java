@@ -36,6 +36,19 @@ public class GameDto
     private int nowPoint;
     private int nowRemoveLine;
 
+
+    private boolean start;
+
+    public boolean isStart()
+    {
+        return start;
+    }
+
+    public void setStart(boolean start)
+    {
+        this.start = start;
+    }
+
     public GameDto()
     {
         gameDtoInit();

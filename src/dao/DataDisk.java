@@ -9,7 +9,7 @@ import java.util.List;
 public class DataDisk implements Data
 {
 
-    private final String filePath=GameConfig.getSystemConfig().getLocalfilepath();
+    private final String filePath=GameConfig.getSystemConfig().getLocalFilePath();
 
 
     @Override

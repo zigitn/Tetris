@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DataBase implements Data
 {
-    private String driver = GameConfig.getSystemConfig().getDbdriver();
+    private String driver = GameConfig.getSystemConfig().getDriver();
     private String dbAddress = GameConfig.getSystemConfig().getDbAddress();
     private String dbUser = GameConfig.getSystemConfig().getDbUser();
     private String dbPwd = GameConfig.getSystemConfig().getDbPwd();

@@ -17,19 +17,19 @@ public class LayerGame extends Layer
 
     public void paint(Graphics g)
     {
-
         this.createBlock(g);
-
-        Point[] points = this.gameDto.getGameAct().getActPoints();
-
-        this.showShadow(points, g);
-        int typeCode = (this.gameDto.getGameAct().getTypeCode()) + 1;
-
-        for (int i = 0; i < points.length; i++)
+        if (this.gameDto.isStart())
         {
-            drawActById(points[i].x, points[i].y, typeCode, g);
+            Point[] points = this.gameDto.getGameAct().getActPoints();
+            this.showShadow(points,g,true);
+            this.drawMainAct(points,g);
         }
+        this.drawGameMap(g);
+    }
 
+    /*游戏主区域*/
+    private void drawGameMap(Graphics g)
+    {
         boolean[][] map = this.gameDto.getGameMainMap();
         for (int x = 0; x < map.length; x++)
         {
@@ -37,12 +37,23 @@ public class LayerGame extends Layer
             {
                 if (map[x][y])
                 {
-                    drawActById(x, y, 0, g);
+                    drawActById(x, y, this.gameDto.isStart()?0:8, g);
 
                 }
             }
         }
+    }
 
+    /*游戏方块*/
+    private void drawMainAct(Point[] points,Graphics g)
+    {
+
+        int typeCode = (this.gameDto.getGameAct().getTypeCode()) + 1;
+
+        for (int i = 0; i < points.length; i++)
+        {
+            drawActById(points[i].x, points[i].y, typeCode, g);
+        }
     }
 
     private void drawActById(int x, int y, int imgIdx, Graphics g)
@@ -52,15 +63,19 @@ public class LayerGame extends Layer
                     this.y + (y << ACT_SIZE_ROL) + BORDER,
                     this.x + (x + 1 << ACT_SIZE_ROL) + BORDER,
                     this.y + (y + 1 << ACT_SIZE_ROL) + BORDER,
-                    imgIdx << ACT_SIZE_ROL,
+                    imgIdx<< ACT_SIZE_ROL,
                     0,
                     (imgIdx + 1) << ACT_SIZE_ROL,
                     1 << ACT_SIZE_ROL,
                     null);
     }
 
-    private void showShadow(Point[] points, Graphics g)
+    private void showShadow(Point[] points, Graphics g,boolean show)
     {
+        if (show==false)
+        {
+            return;
+        }
         int leftX = 9;
         int rightX = 0;
         for (Point p : points)
@@ -72,7 +87,8 @@ public class LayerGame extends Layer
                     this.x + BORDER + (leftX << ACT_SIZE_ROL),
                     this.y + BORDER,
                     (rightX - leftX + 1) << ACT_SIZE_ROL,
-                    this.h-(BORDER<<1),null);
+                    this.h - (BORDER << 1),
+                    null);
     }
 
 }

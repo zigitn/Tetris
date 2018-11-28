@@ -31,8 +31,6 @@ public class GameControl
     /*游戏行为控制*/
     private Map<Integer, Method> action;
 
-    private FrameSet frameSet;
-
     public GameControl(PanelGame panelGame, GameService gameService)
     {
         this.panelGame = panelGame;
@@ -59,6 +57,7 @@ public class GameControl
             action.put((int) PROP.getProperty("left").charAt(0), this.gameService.getClass().getMethod("left"));
             action.put((int) PROP.getProperty("right").charAt(0), this.gameService.getClass().getMethod("right"));
             action.put((int) PROP.getProperty("cheat").charAt(0), this.gameService.getClass().getMethod("cheat"));
+            action.put((int) PROP.getProperty("downToBottom").charAt(0), this.gameService.getClass().getMethod("downToBottom"));
 
             fis.close();
         }
@@ -69,7 +68,7 @@ public class GameControl
     }
 
 
-    public void actionByKeyCode(int keyCode)
+    void actionByKeyCode(int keyCode)
     {
         if (this.action.containsKey(keyCode))
         {
@@ -87,6 +86,12 @@ public class GameControl
 
     public void showFrameSet()
     {
-        this.frameSet=new FrameSet(this);
+        new FrameSet(this);
+    }
+
+    public void startGame()
+    {
+        this.gameService.startMainThead();
+        this.panelGame.repaint();
     }
 }

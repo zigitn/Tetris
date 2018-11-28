@@ -10,7 +10,6 @@ import java.util.Properties;
 public class GameConfig
 {
     private static FrameConfig FRAME_CONFIG = null;
-    private static DataConfig DATA_CONFIG = null;
     private static SystemConfig SYSTEM_CONFIG = null;
     private static Properties PROP = new Properties();
 
@@ -18,8 +17,7 @@ public class GameConfig
     {
         try
         {
-            //读取Propertses文件
-
+            //读取Properties文件
             FileInputStream fis = new FileInputStream("./data/systemconfig.Properties");
             PROP.load(fis);
             fis.close();
@@ -35,7 +33,6 @@ public class GameConfig
             //创建系统对象
             SYSTEM_CONFIG = new SystemConfig(game.element("system"), PROP);
             //创建数据访问对象
-            DATA_CONFIG = new DataConfig(game.element("data"), PROP);
 
 
 
@@ -57,11 +54,7 @@ public class GameConfig
         return FRAME_CONFIG;
     }
 
-    /*获得系统配置*/
-    public static DataConfig getDataConfig()
-    {
-        return DATA_CONFIG;
-    }
+
 
     /*获得数据访问配置*/
     public static SystemConfig getSystemConfig()

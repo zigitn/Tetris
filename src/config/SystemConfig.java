@@ -17,9 +17,9 @@ public class SystemConfig
     private final List<Boolean> typeRound;
     private final List<Point[]> typeConfig;
 
-    public String getDbdriver()
+    public String getDriver()
     {
-        return dbdriver;
+        return driver;
     }
 
     public String getDbAddress()
@@ -37,32 +37,30 @@ public class SystemConfig
         return dbPwd;
     }
 
-    public String getLocalfilepath()
+    public String getLocalFilePath()
     {
-        return localfilepath;
+        return LocalFilePath;
     }
 
-    private final String dbdriver;
+    private final String driver;
     private final String dbAddress;
     private final String dbUser;
     private final String dbPwd;
-    private final String localfilepath;
+    private final String LocalFilePath;
 
 
-    public SystemConfig(Element system, Properties systemSettings)
+    public SystemConfig(Element system, Properties PROP)
     {
-        this.minX = Integer.parseInt(systemSettings.getProperty("minX"));
-        this.maxX = Integer.parseInt(systemSettings.getProperty("maxX"));
-        this.minY = Integer.parseInt(systemSettings.getProperty("minY"));
-        this.maxY = Integer.parseInt(systemSettings.getProperty("maxY"));
-        this.levelUp = Integer.parseInt(systemSettings.getProperty("levelUp"));
-        this.dbdriver = systemSettings.getProperty("dbdriver");
-        this.dbAddress = systemSettings.getProperty("dbAddress");
-        this.dbUser = systemSettings.getProperty("dbUser");
-        this.dbPwd = systemSettings.getProperty("dbPwd");
-        this.localfilepath = systemSettings.getProperty("filePath");
-
-
+        this.minX = Integer.parseInt(PROP.getProperty("minX"));
+        this.maxX = Integer.parseInt(PROP.getProperty("maxX"));
+        this.minY = Integer.parseInt(PROP.getProperty("minY"));
+        this.maxY = Integer.parseInt(PROP.getProperty("maxY"));
+        this.levelUp = Integer.parseInt(PROP.getProperty("levelUp"));
+        this.driver = PROP.getProperty("driver");
+        this.dbAddress = PROP.getProperty("dbAddress");
+        this.dbUser = PROP.getProperty("dbUser");
+        this.dbPwd = PROP.getProperty("dbPwd");
+        this.LocalFilePath = PROP.getProperty("filePath");
 
 
         List<Element> rects = system.elements("rect");

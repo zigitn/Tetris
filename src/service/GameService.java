@@ -11,21 +11,16 @@ import java.util.Random;
 
 public class GameService
 {
-
     private GameDto gameDto;
-
     private Random random = new Random();
-    private static final int MAX_TYPE = 6;
+    private static final int MAX_TYPE = GameConfig.getSystemConfig().getTypeConfig().size() - 1;
     private static final double LEVEL_UP = GameConfig.getSystemConfig().getLevelUp();
-
     private int countRemoveLine = 0;
     private int sumRemoveLine = 0;
 
     public GameService(GameDto gameDto)
     {
         this.gameDto = gameDto;
-        GameAct gameAct = new GameAct(random.nextInt(MAX_TYPE));
-        gameDto.setGameAct(gameAct);
     }
 
     public void up()
@@ -33,30 +28,99 @@ public class GameService
         this.gameDto.getGameAct().round(this.gameDto.getGameMainMap());
     }
 
-    public void down()
+    public boolean down()
     {
-        if (!this.gameDto.getGameAct().move(0, 1, this.gameDto.getGameMainMap()))
+        if (this.gameDto.getGameAct().move(0, 1, this.gameDto.getGameMainMap()))
         {
-            boolean[][] map = this.gameDto.getGameMainMap();
-            Point[] act = this.gameDto.getGameAct().getActPoints();
-            for (Point point : act)
-            {
-                map[point.x][point.y] = true;
-            }
-            this.gameDto.getGameAct().init(this.gameDto.getNext());
-            this.gameDto.setNext(random.nextInt(MAX_TYPE));
-            this.checkRemoveLine();
-
-            int nowPoint=gameDto.getNowPoint();
-
-            gameDto.setNowPoint(countRemoveLine>0?nowPoint+((countRemoveLine-1)<<1):nowPoint);
-            if (sumRemoveLine%20==1&&sumRemoveLine!=1)
-            {
-                gameDto.setNowLevel(gameDto.getNowLevel()+1);
-            }
-
-            countRemoveLine=0;
+            return true;
         }
+        boolean[][] map = this.gameDto.getGameMainMap();
+        Point[] act = this.gameDto.getGameAct().getActPoints();
+        for (Point point : act)
+        {
+            map[point.x][point.y] = true;
+        }
+        this.gameDto.getGameAct().init(this.gameDto.getNext());
+        this.gameDto.setNext(random.nextInt(MAX_TYPE));
+        this.checkRemoveLine();
+
+        int nowPoint = gameDto.getNowPoint();
+
+        gameDto.setNowPoint(countRemoveLine > 0 ? nowPoint + ((countRemoveLine - 1) << 1) : nowPoint);
+        if (sumRemoveLine % 20 == 1 && sumRemoveLine != 1)
+        {
+            gameDto.setNowLevel(gameDto.getNowLevel() + 1);
+        }
+        countRemoveLine = 0;
+
+        if (checkIsLose())
+        {
+            this.afterLose();
+        }
+        return false;
+    }
+
+
+    public void left()
+    {
+        this.gameDto.getGameAct().move(-1, 0, this.gameDto.getGameMainMap());
+    }
+
+    public void right()
+    {
+        this.gameDto.getGameAct().move(1, 0, this.gameDto.getGameMainMap());
+
+    }
+
+
+    //===================================================
+    public void cheat()
+    {
+        this.gameDto.setNowLevel(this.gameDto.getNowLevel() + 1);
+        this.gameDto.setNowPoint(this.gameDto.getNowPoint() + 1);
+        this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine() + 1);
+    }
+
+    public void downToBottom()
+    {
+        while (this.down());
+    }
+
+    public void pause()
+    {
+
+    }
+
+
+
+    //==================================================
+    /*启动主线程*/
+    public void startMainThead()
+    {
+        GameAct gameAct = new GameAct(random.nextInt(MAX_TYPE));
+        gameDto.setGameAct(gameAct);
+        gameDto.setStart(true);
+    }
+
+    private void afterLose()
+    {
+        this.gameDto.setStart(false);
+        //todo 关闭主线程
+
+    }
+
+    private boolean checkIsLose()
+    {
+        Point[] points = this.gameDto.getGameAct().getActPoints();
+        boolean[][] gameMap = this.gameDto.getGameMainMap();
+        for (Point p : points)
+        {
+            if (gameMap[p.x][p.y])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkRemoveLine()
@@ -93,24 +157,8 @@ public class GameService
         return true;
     }
 
-    public void left()
-    {
-        this.gameDto.getGameAct().move(-1, 0, this.gameDto.getGameMainMap());
-    }
 
-    public void right()
-    {
-        this.gameDto.getGameAct().move(1, 0, this.gameDto.getGameMainMap());
-
-    }
-
-    //===================================================
-    public void cheat()
-    {
-        this.gameDto.setNowLevel(this.gameDto.getNowLevel() + 1);
-        this.gameDto.setNowPoint(this.gameDto.getNowPoint() + 1);
-        this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine() + 1);
-    }
+//=====================================================
 
     public void setDbRecode(List<PlayerInfo> loadData)
     {
@@ -121,4 +169,5 @@ public class GameService
     {
         this.gameDto.setDiskRecode(loadData);
     }
+
 }
