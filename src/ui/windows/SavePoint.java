@@ -1,19 +1,23 @@
 package ui.windows;
 
 import Util.FrameUtil;
+import control.GameControl;
+import service.GameService;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SavePoint extends JFrame
 {
-    private JButton OJBK=null;
-    private JTextField nameInput=null;
-    private JLabel score=null;
-    private JLabel name=null;
+    private GameService gameService;
+    private JButton OJBK = null;
+    private JTextField nameInput = null;
+    private JLabel score = null;
+    private JLabel name = null;
 
-    public SavePoint()
+    public SavePoint(GameService gameService)
     {
+        this.gameService = gameService;
         this.setTitle("游戏结束");
         //固定窗口位置及大小
         this.setSize(300, 150);
@@ -21,7 +25,7 @@ public class SavePoint extends JFrame
         FrameUtil.setFrameToCenter(this);
         //设置为边界布局
         this.setLayout(new BorderLayout());
-        
+
         //初始化组件
         this.initCom();
 
@@ -45,16 +49,15 @@ public class SavePoint extends JFrame
         center.add(nameInput);
         this.add(center, BorderLayout.CENTER);
 
-
         //南部
-        this.OJBK=new JButton("确定");
+        this.OJBK = new JButton("确定");
         JPanel south = new JPanel(new FlowLayout(FlowLayout.CENTER));
         south.add(OJBK);
-        this.add(south,BorderLayout.SOUTH);
+        OJBK.addActionListener(actionEvent ->
+                               {
+                                   gameService.
+                               });
+        this.add(south, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args)
-    {
-        new SavePoint();
-    }
 }

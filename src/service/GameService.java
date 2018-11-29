@@ -4,6 +4,7 @@ import config.GameConfig;
 import dto.GameDto;
 import dto.PlayerInfo;
 import entity.GameAct;
+import ui.windows.SavePoint;
 
 import java.awt.*;
 import java.util.List;
@@ -62,6 +63,7 @@ public class GameService
                 if (checkIsLose())
                 {
                     gameDto.setStart(false);
+                    new SavePoint(this);
                 }
                 return false;
             }
@@ -69,6 +71,7 @@ public class GameService
         return false;
 
     }
+
 
     public void left()
     {
