@@ -1,13 +1,11 @@
 package service;
 
+import audio.WaveThread;
 import config.GameConfig;
 import dto.GameDto;
-import dto.PlayerInfo;
 import entity.GameAct;
-import ui.windows.SavePoint;
 
 import java.awt.*;
-import java.util.List;
 import java.util.Random;
 
 public class GameService
@@ -53,6 +51,10 @@ public class GameService
 
                 this.checkRemoveLine();
                 int nowPoint = gameDto.getNowPoint();
+                if (countRemoveLine>0)
+                {
+                    new WaveThread(Integer.toString(countRemoveLine)).start();
+                }
                 gameDto.setNowPoint(countRemoveLine > 0 ? nowPoint + ((countRemoveLine - 1) << 1) : nowPoint);
                 if (sumRemoveLine % 20 == 1 && sumRemoveLine != 1)
                 {
@@ -63,7 +65,6 @@ public class GameService
                 if (checkIsLose())
                 {
                     gameDto.setStart(false);
-                    new SavePoint(this);
                 }
                 return false;
             }
@@ -98,9 +99,9 @@ public class GameService
     //===================================================
     public void cheat()
     {
-        this.gameDto.setNowLevel(this.gameDto.getNowLevel() + 1);
-        this.gameDto.setNowPoint(this.gameDto.getNowPoint() + 1);
-        this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine() + 1);
+//        this.gameDto.setNowLevel(this.gameDto.getNowLevel() + 1);
+//        this.gameDto.setNowPoint(this.gameDto.getNowPoint() + 1);
+//        this.gameDto.setNowRemoveLine(this.gameDto.getNowRemoveLine() + 1);
     }
 
     public void downToBottom()
@@ -123,6 +124,8 @@ public class GameService
         GameAct gameAct = new GameAct(random.nextInt(MAX_TYPE));
         gameDto.setGameAct(gameAct);
         gameDto.setStart(true);
+        this.gameDto.gameDtoInit();
+
     }
 
     public void gameMainAction()
@@ -178,5 +181,4 @@ public class GameService
         }
         return true;
     }
-
 }

@@ -4,6 +4,7 @@ import config.GameConfig;
 import dto.PlayerInfo;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataDisk implements Data
@@ -15,7 +16,7 @@ public class DataDisk implements Data
     @Override
     public void saveData(PlayerInfo playerInfo)
     {
-        List<PlayerInfo> playerInfoList=this.loadData();
+        List<PlayerInfo> playerInfoList=this.loadData()==null?new ArrayList<PlayerInfo>():this.loadData();
         playerInfoList.add(playerInfo);
         ObjectOutputStream oos = null;
         try

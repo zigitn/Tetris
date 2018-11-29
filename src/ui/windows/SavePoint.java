@@ -2,22 +2,24 @@ package ui.windows;
 
 import Util.FrameUtil;
 import control.GameControl;
-import service.GameService;
+import dto.GameDto;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SavePoint extends JFrame
 {
-    private GameService gameService;
+    private GameControl gameControl;
+    private GameDto gameDto;
     private JButton OJBK = null;
     private JTextField nameInput = null;
     private JLabel score = null;
     private JLabel name = null;
 
-    public SavePoint(GameService gameService)
+    public SavePoint(GameControl gameControl, GameDto gameDto)
     {
-        this.gameService = gameService;
+        this.gameControl = gameControl;
+        this.gameDto = gameDto;
         this.setTitle("游戏结束");
         //固定窗口位置及大小
         this.setSize(300, 150);
@@ -27,17 +29,17 @@ public class SavePoint extends JFrame
         this.setLayout(new BorderLayout());
 
         //初始化组件
-        this.initCom();
+        this.initCom(gameDto);
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
 
-    private void initCom()
+    private void initCom(GameDto gameDto)
     {
         //北部
         JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        this.score = new JLabel("得分:9999");
+        this.score = new JLabel("得分:"+gameDto.getNowPoint());
         north.add(score);
         this.add(north, BorderLayout.NORTH);
 
@@ -55,7 +57,15 @@ public class SavePoint extends JFrame
         south.add(OJBK);
         OJBK.addActionListener(actionEvent ->
                                {
-                                   gameService.
+                                   if (nameInput.getText()!=null&&nameInput.getText().length()<15)
+                                   {
+                                       gameControl.savePoint(nameInput.getText());
+                                       this.dispose();
+                                   }
+                                   else
+                                   {
+                                       JOptionPane.showMessageDialog(null, "请输入正确的ID");
+                                   }
                                });
         this.add(south, BorderLayout.SOUTH);
     }

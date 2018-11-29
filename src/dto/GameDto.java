@@ -66,9 +66,13 @@ public class GameDto
         gameDtoInit();
 
     }
-    private void gameDtoInit()
+    public void gameDtoInit()
     {
         this.gameMainMap=new boolean[10][18];
+        this.nowLevel=0;
+        this.nowPoint=0;
+        this.nowRemoveLine=0;
+        this.pause=false;
     }
 
     public void setDbRecode(List<PlayerInfo> dbRecode)

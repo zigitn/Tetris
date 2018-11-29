@@ -83,7 +83,7 @@ public class DataBase implements Data
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         finally
         {
@@ -101,7 +101,7 @@ public class DataBase implements Data
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
 

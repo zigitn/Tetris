@@ -25,19 +25,18 @@ public class FrameSet extends JFrame
     private static final String[] keyList = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
                                              "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
     };
-    private static final String[] keyNameList = {"up", "down", "left", "right", "downToBottom","pause","cheat"};
+    private static final String[] keyNameList = {"up", "down", "left", "right", "downToBottom","pause"};
     private static final String[] labelNameList;
     private static JComboBox<String> jcbUp = new JComboBox<>(keyList);
     private static JComboBox<String> jcbDown = new JComboBox<>(keyList);
     private static JComboBox<String> jcbLeft = new JComboBox<>(keyList);
     private static JComboBox<String> jcbRight = new JComboBox<>(keyList);
-    private static JComboBox<String> jcbCheat = new JComboBox<>(keyList);
     private static JComboBox<String> jcbPause = new JComboBox<>(keyList);
     private static JComboBox<String> jcbDownToBottom = new JComboBox<>(keyList);
 
     static
     {
-        labelNameList = new String[]{"旋转", "下", "左", "右","速降","暂停", "作弊"};
+        labelNameList = new String[]{"旋转", "下", "左", "右","速降","暂停"};
         for (String labelName : labelNameList)
         {
             Labels.add(new JLabel(labelName + ":"));
@@ -47,7 +46,6 @@ public class FrameSet extends JFrame
         comboBoxes.add(jcbDown);
         comboBoxes.add(jcbLeft);
         comboBoxes.add(jcbRight);
-        comboBoxes.add(jcbCheat);
         comboBoxes.add(jcbPause);
         comboBoxes.add(jcbDownToBottom);
     }
