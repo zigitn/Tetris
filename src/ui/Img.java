@@ -29,7 +29,7 @@ public class Img
         File dir=new File("./media/background");
         File[] files=dir.listFiles();
         BG_LIST=new ArrayList<Image>();
-        for (File file:files)
+        for (File file: files != null ? files : new File[0])
         {
             BG_LIST.add(new ImageIcon(file.getPath()).getImage());
         }
@@ -42,9 +42,9 @@ public class Img
     // LayerPoint
     public static final Image IMG_POINT = new ImageIcon("./media/string/point.png").getImage();
     public static final Image IMG_RMLINE = new ImageIcon("./media/string/rmline.png").getImage();
-    public static final Image IMG_SLOT = new ImageIcon("./media/window/rect.png").getImage();
+    static final Image IMG_SLOT = new ImageIcon("./media/window/rect.png").getImage();
     public static final Image IMG_SHADOW = new ImageIcon("./media/game/shadow.png").getImage();
-    public static final int IMG_SLOT_W = Img.IMG_SLOT.getWidth(null);
+    static final int IMG_SLOT_W = Img.IMG_SLOT.getWidth(null);
 
 
 
@@ -62,5 +62,8 @@ public class Img
 
     //LayerDisk
     public static Image IMG_DISK = new ImageIcon("media/string/disk.png").getImage();
+
+    //pause
+    public static Image IMG_PAUSE = new ImageIcon("media/string/pause.png").getImage();
 
 }

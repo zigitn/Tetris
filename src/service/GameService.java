@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class GameService
 {
-    private GameDto gameDto;
+    private final GameDto gameDto;
     private Random random = new Random();
     private static final int MAX_TYPE = GameConfig.getSystemConfig().getTypeConfig().size() - 1;
     private static final double LEVEL_UP = GameConfig.getSystemConfig().getLevelUp();
@@ -25,53 +25,72 @@ public class GameService
 
     public void up()
     {
-        this.gameDto.getGameAct().round(this.gameDto.getGameMainMap());
+        synchronized (this.gameDto)
+        {
+            this.gameDto.getGameAct().round(this.gameDto.getGameMainMap());
+        }
     }
 
     public boolean down()
     {
-        if (this.gameDto.getGameAct().move(0, 1, this.gameDto.getGameMainMap()))
+        if (!gameDto.isPause())
         {
-            return true;
-        }
-        boolean[][] map = this.gameDto.getGameMainMap();
-        Point[] act = this.gameDto.getGameAct().getActPoints();
-        for (Point point : act)
-        {
-            map[point.x][point.y] = true;
-        }
-        this.gameDto.getGameAct().init(this.gameDto.getNext());
-        this.gameDto.setNext(random.nextInt(MAX_TYPE));
-        this.checkRemoveLine();
+            synchronized (this.gameDto)
+            {
+                if (this.gameDto.getGameAct().move(0, 1, this.gameDto.getGameMainMap()))
+                {
+                    return true;
+                }
+                boolean[][] map = this.gameDto.getGameMainMap();
+                Point[] act = this.gameDto.getGameAct().getActPoints();
+                for (Point point : act)
+                {
+                    map[point.x][point.y] = true;
+                }
+                this.gameDto.getGameAct().init(this.gameDto.getNext());
+                this.gameDto.setNext(random.nextInt(MAX_TYPE));
 
-        int nowPoint = gameDto.getNowPoint();
+                this.checkRemoveLine();
+                int nowPoint = gameDto.getNowPoint();
+                gameDto.setNowPoint(countRemoveLine > 0 ? nowPoint + ((countRemoveLine - 1) << 1) : nowPoint);
+                if (sumRemoveLine % 20 == 1 && sumRemoveLine != 1)
+                {
+                    gameDto.setNowLevel(gameDto.getNowLevel() + 1);
+                }
+                countRemoveLine = 0;
 
-        gameDto.setNowPoint(countRemoveLine > 0 ? nowPoint + ((countRemoveLine - 1) << 1) : nowPoint);
-        if (sumRemoveLine % 20 == 1 && sumRemoveLine != 1)
-        {
-            gameDto.setNowLevel(gameDto.getNowLevel() + 1);
-        }
-        countRemoveLine = 0;
-
-        if (checkIsLose())
-        {
-            this.afterLose();
+                if (checkIsLose())
+                {
+                    gameDto.setStart(false);
+                }
+                return false;
+            }
         }
         return false;
-    }
 
+    }
 
     public void left()
     {
-        this.gameDto.getGameAct().move(-1, 0, this.gameDto.getGameMainMap());
+        if (!gameDto.isPause())
+        {
+            synchronized (this.gameDto)
+            {
+                this.gameDto.getGameAct().move(-1, 0, this.gameDto.getGameMainMap());
+            }
+        }
     }
 
     public void right()
     {
-        this.gameDto.getGameAct().move(1, 0, this.gameDto.getGameMainMap());
-
+        if (!gameDto.isPause())
+        {
+            synchronized (this.gameDto)
+            {
+                this.gameDto.getGameAct().move(1, 0, this.gameDto.getGameMainMap());
+            }
+        }
     }
-
 
     //===================================================
     public void cheat()
@@ -88,26 +107,26 @@ public class GameService
 
     public void pause()
     {
-
+        if (gameDto.isStart())
+        {
+            gameDto.changePause();
+        }
     }
-
-
 
     //==================================================
     /*启动主线程*/
-    public void startMainThead()
+    public void startGame()
     {
         GameAct gameAct = new GameAct(random.nextInt(MAX_TYPE));
         gameDto.setGameAct(gameAct);
         gameDto.setStart(true);
     }
 
-    private void afterLose()
+    public void gameMainAction()
     {
-        this.gameDto.setStart(false);
-        //todo 关闭主线程
-
+        down();
     }
+
 
     private boolean checkIsLose()
     {
@@ -155,19 +174,6 @@ public class GameService
             }
         }
         return true;
-    }
-
-
-//=====================================================
-
-    public void setDbRecode(List<PlayerInfo> loadData)
-    {
-        this.gameDto.setDbRecode(loadData);
-    }
-
-    public void setDiskRecode(List<PlayerInfo> loadData)
-    {
-        this.gameDto.setDiskRecode(loadData);
     }
 
 }

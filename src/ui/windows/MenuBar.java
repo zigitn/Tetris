@@ -1,4 +1,4 @@
-package ui.cfg;
+package ui.windows;
 
 import control.GameControl;
 

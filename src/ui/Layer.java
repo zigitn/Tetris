@@ -95,6 +95,13 @@ public abstract class Layer
 
     }
 
+    protected void drawImageAtCenter(Image img, Graphics g)
+    {
+        int imgW = img.getWidth(null);
+        int imgH = img.getHeight(null);
+        g.drawImage(img, this.x + (this.w - imgW >> 1), this.y + (this.h - imgH >> 1), null);
+    }
+
     abstract public void paint(Graphics g);
 
     public void setGameDto(GameDto gameDto)
@@ -104,7 +111,7 @@ public abstract class Layer
 
     protected void showNum(int num, Graphics g, int PaddingTop)
     {
-        char spited[] = Integer.toString(num).toCharArray();
+        char[] spited = Integer.toString(num).toCharArray();
         for (int i = spited.length - 1; i >= 0; i--)
         {
             g.drawImage(IMG_NUMBER,
@@ -151,7 +158,7 @@ public abstract class Layer
         //数字
         if (max != 0)
         {
-            char spited[] = Integer.toString(max).toCharArray();
+            char[] spited = Integer.toString(max).toCharArray();
             for (int i = spited.length - 1; i >= 0; i--)
             {
                 String temp = Character.toString(spited[i]);

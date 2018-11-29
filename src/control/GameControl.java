@@ -3,9 +3,11 @@ package control;
 import dao.Data;
 import dao.DataBase;
 import dao.DataDisk;
+import dto.GameDto;
 import service.GameService;
+import ui.FrameGame;
 import ui.PanelGame;
-import ui.cfg.FrameSet;
+import ui.windows.FrameSet;
 
 import java.io.FileInputStream;
 import java.lang.reflect.Method;
@@ -19,11 +21,10 @@ import java.util.Properties;
 public class GameControl
 {
 
-    private Data dataDisk =new DataDisk();
-    private Data dataDataBase= new DataBase();
-
     /*游戏界面层*/
     private PanelGame panelGame;
+
+    private GameDto gameDto;
 
     /*游戏逻辑层*/
     private GameService gameService;
@@ -31,17 +32,27 @@ public class GameControl
     /*游戏行为控制*/
     private Map<Integer, Method> action;
 
-    public GameControl(PanelGame panelGame, GameService gameService)
+    private Thread mainThread;
+
+    public GameControl()
     {
-        this.panelGame = panelGame;
-        this.gameService = gameService;
+        //创建游戏数据源
+        this.gameDto = new GameDto();
+        //创建游戏逻辑块
+        this.gameService = new GameService(gameDto);
+        //
+        Data dataDisk = new DataDisk();
+        this.gameDto.setDiskRecode(dataDisk.loadData());
 
-        /*获得类对象*/
+        Data dataDataBase = new DataBase();
+        this.gameDto.setDbRecode(dataDataBase.loadData());
 
-        this.gameService.setDiskRecode(dataDisk.loadData());
+        this.panelGame = new PanelGame(gameDto, this);
 
-        this.gameService.setDbRecode(dataDataBase.loadData());
         setKeyProfile();
+
+        new FrameGame(panelGame, this);
+
     }
 
     public void setKeyProfile()
@@ -57,7 +68,9 @@ public class GameControl
             action.put((int) PROP.getProperty("left").charAt(0), this.gameService.getClass().getMethod("left"));
             action.put((int) PROP.getProperty("right").charAt(0), this.gameService.getClass().getMethod("right"));
             action.put((int) PROP.getProperty("cheat").charAt(0), this.gameService.getClass().getMethod("cheat"));
-            action.put((int) PROP.getProperty("downToBottom").charAt(0), this.gameService.getClass().getMethod("downToBottom"));
+            action.put((int) PROP.getProperty("downToBottom").charAt(0),
+                       this.gameService.getClass().getMethod("downToBottom"));
+            action.put((int) PROP.getProperty("pause").charAt(0), this.gameService.getClass().getMethod("pause"));
 
             fis.close();
         }
@@ -67,10 +80,9 @@ public class GameControl
         }
     }
 
-
     void actionByKeyCode(int keyCode)
     {
-        if (this.action.containsKey(keyCode))
+        if (gameDto.isStart()&&this.action.containsKey(keyCode))
         {
             try
             {
@@ -91,7 +103,35 @@ public class GameControl
 
     public void startGame()
     {
-        this.gameService.startMainThead();
+        this.gameService.startGame();
+        this.mainThread = new MainThread();
+        this.mainThread.start();
         this.panelGame.repaint();
+    }
+
+    private class MainThread extends Thread
+    {
+        public void run()
+        {
+            panelGame.repaint();
+            while (gameDto.isStart())
+            {
+                try
+                {
+                    Thread.sleep(500);
+                    if (gameDto.isPause())
+                    {
+                        continue;
+                    }
+                    gameService.gameMainAction();
+                    panelGame.repaint();
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 }

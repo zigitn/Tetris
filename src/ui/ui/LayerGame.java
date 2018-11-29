@@ -10,6 +10,7 @@ public class LayerGame extends Layer
 {
     private static final int ACT_SIZE_ROL = GameConfig.getFrameConfig().getSizeRol();
 
+
     public LayerGame(int x, int y, int w, int h)
     {
         super(x, y, w, h);
@@ -25,6 +26,12 @@ public class LayerGame extends Layer
             this.drawMainAct(points,g);
         }
         this.drawGameMap(g);
+
+        //pause
+        if (gameDto.isPause())
+        {
+            this.drawImageAtCenter(Img.IMG_PAUSE,g);
+        }
     }
 
     /*游戏主区域*/
@@ -50,9 +57,9 @@ public class LayerGame extends Layer
 
         int typeCode = (this.gameDto.getGameAct().getTypeCode()) + 1;
 
-        for (int i = 0; i < points.length; i++)
+        for (Point point : points)
         {
-            drawActById(points[i].x, points[i].y, typeCode, g);
+            drawActById(point.x, point.y, typeCode, g);
         }
     }
 
@@ -72,7 +79,7 @@ public class LayerGame extends Layer
 
     private void showShadow(Point[] points, Graphics g,boolean show)
     {
-        if (show==false)
+        if (!show)
         {
             return;
         }

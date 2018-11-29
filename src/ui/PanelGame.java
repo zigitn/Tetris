@@ -17,27 +17,15 @@ public class PanelGame extends JPanel
 {
     private List<Layer> layers;
 
-    private GameDto gameDto;
 
-
-
-    private GameControl gameControl=null;
-    public PanelGame(GameDto gameDto)
+    public PanelGame(GameDto gameDto,GameControl gameControl)
     {
-        this.gameDto = gameDto;
-        initComponent();
-        initLayer();
-
+        initLayer(gameDto);
+        this.addKeyListener(new PlayerControl(gameControl));
     }
 
 
-
-    private void initComponent()
-    {
-
-    }
-
-    private void initLayer()
+    private void initLayer(GameDto gameDto)
     {
         try
         {
@@ -74,13 +62,5 @@ public class PanelGame extends JPanel
         this.requestFocus();
     }
 
-    public void setGameControl(PlayerControl playerControl)
-    {
-        this.addKeyListener(playerControl);
-    }
-    public void setGameControl(GameControl gameControl)
-    {
-        this.gameControl = gameControl;
-    }
 }
 

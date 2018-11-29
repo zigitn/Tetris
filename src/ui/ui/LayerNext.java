@@ -22,10 +22,5 @@ public class LayerNext extends Layer
 
     }
 
-    public void drawImageAtCenter(Image img, Graphics g)
-    {
-        int imgW = img.getWidth(null);
-        int imgH = img.getHeight(null);
-        g.drawImage(img, this.x + (this.w - imgW >> 1), this.y + (this.h - imgH >> 1), null);
-    }
+
 }

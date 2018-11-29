@@ -36,6 +36,17 @@ public class GameDto
     private int nowPoint;
     private int nowRemoveLine;
 
+    private boolean pause;
+
+    public boolean isPause()
+    {
+        return pause;
+    }
+
+    public void changePause()
+    {
+        this.pause = !this.pause;
+    }
 
     private boolean start;
 
@@ -43,6 +54,7 @@ public class GameDto
     {
         return start;
     }
+
 
     public void setStart(boolean start)
     {
@@ -54,7 +66,7 @@ public class GameDto
         gameDtoInit();
 
     }
-    public void gameDtoInit()
+    private void gameDtoInit()
     {
         this.gameMainMap=new boolean[10][18];
     }
